@@ -1,3 +1,3 @@
 This project is under initial phase...
 
-It is planned to be a socail web site people can share their thoughs with each other
+It is planned to be a socail web site people can share their thoughs with each other.
