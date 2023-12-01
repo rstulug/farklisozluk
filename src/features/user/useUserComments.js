@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { getUserComments } from "../../services/apiComments";
 
-export function useUserData() {
+export function useUserComments() {
   const { usernameSlug } = useParams();
   const {
     data: userComments,

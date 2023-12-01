@@ -1,12 +1,20 @@
-import { useUserData } from "./useUserData";
+import { useUserComments } from "./useUserComments";
 import Spinner from "../../ui/Spinner";
 
+import CommentItem from "../../ui/CommentItem";
+
 function User() {
-  const { userComments, isLoading } = useUserData();
+  const { userComments, isLoading } = useUserComments();
 
   if (isLoading) return <Spinner />;
-  console.log(userComments);
-  return <div></div>;
+
+  return (
+    <ul>
+      {userComments.map((comment) => (
+        <CommentItem comment={comment} key={comment.id} />
+      ))}
+    </ul>
+  );
 }
 
 export default User;

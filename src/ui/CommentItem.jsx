@@ -29,11 +29,20 @@ function CommentItem({ comment }) {
     const obj = { numLike: comment.numLike + 1 };
     updateNumLike({ id: comment.id, obj });
   }
+  console.log(comment);
 
   return (
     <li className="mb-5">
+      {comment?.Post?.titleSlug && (
+        <Link
+          to={`/posts/${comment.Post.titleSlug}`}
+          className="text-xl font-bold"
+        >
+          {comment.Post.title}
+        </Link>
+      )}
       <div className="flex flex-col">
-        <div className="mb-7">
+        <div className="mb-2 mt-4">
           <p className="text-justify">{parse(text)}</p>
           {commentLength > max_word && (
             <button

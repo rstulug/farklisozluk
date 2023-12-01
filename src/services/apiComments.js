@@ -3,7 +3,7 @@ import supabase from "./supabase";
 export async function getPostComments(slug) {
   const { data, error } = await supabase
     .from("Comment")
-    .select("*,User(username, usernameSlug),Post!inner(*)")
+    .select("*,User(username, usernameSlug),Post!inner()")
     .eq("Post.titleSlug", slug)
     .order("created_at");
 
@@ -15,7 +15,7 @@ export async function getPostComments(slug) {
 export async function getUserComments(slug) {
   const { data, error } = await supabase
     .from("Comment")
-    .select("*,Post(title, titleSlug), User!inner()")
+    .select("*,Post(title, titleSlug), User!inner(username, usernameSlug)")
     .eq("User.usernameSlug", slug)
     .order("created_at");
 
