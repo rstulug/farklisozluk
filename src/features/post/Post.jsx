@@ -14,7 +14,9 @@ import { Controller, useForm } from "react-hook-form";
 function Post() {
   const { post, isLoading } = usePost();
 
-  const { user } = useUser();
+  const { user, UserMeta } = useUser();
+  console.log(user);
+  console.log(UserMeta);
   const { postComments, isLoading: isCommentLoading } = useComments();
   const { handleSubmit, control } = useForm();
 

@@ -63,11 +63,19 @@ export async function getCurrentUser() {
 
   if (!session.session) return null;
 
-  const { data, error } = await supabase.auth.getUser();
+  const { data: user, error1 } = await supabase.auth.getUser();
 
-  if (error) throw new Error(error.message);
+  if (error1) throw new Error(error1.message);
 
-  return data?.user;
+  const { data: UserMeta, error2 } = await supabase
+    .from("UserMeta")
+    .select("*")
+    .eq("id", user.user.id)
+    .single();
+
+  if (error2) throw new Error(error2.message);
+
+  return { UserMeta, user };
 }
 
 export async function getUserData(slug) {

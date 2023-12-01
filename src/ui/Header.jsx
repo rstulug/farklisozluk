@@ -10,6 +10,7 @@ function Header() {
   const location = useLocation();
   const { logout, status } = useLogout();
   const { user, isLoading } = useUser();
+  console.log(user);
 
   if (isLoading) return <Spinner />;
 
