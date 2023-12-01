@@ -1,19 +1,21 @@
-import { useUserComments } from "./useUserComments";
+import UserComments from "./UserComments";
 import Spinner from "../../ui/Spinner";
-
-import CommentItem from "../../ui/CommentItem";
+import { useUserData } from "./useUserData";
+import Empty from "../../ui/Empty";
 
 function User() {
-  const { userComments, isLoading } = useUserComments();
+  const { userData, isLoading } = useUserData();
 
   if (isLoading) return <Spinner />;
 
+  console.log(userData);
+
+  if (!userData) return <Empty message="Böyle bir kullanıcı bulamadık" />;
+
   return (
-    <ul>
-      {userComments.map((comment) => (
-        <CommentItem comment={comment} key={comment.id} />
-      ))}
-    </ul>
+    <div>
+      <UserComments />
+    </div>
   );
 }
 

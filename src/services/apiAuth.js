@@ -70,11 +70,11 @@ export async function getCurrentUser() {
   return data?.user;
 }
 
-export async function getUserData(id) {
+export async function getUserData(slug) {
   const { data, error } = await supabase
     .from("UserMeta")
     .select("*")
-    .eq("id", id)
+    .eq("usernameSlug", slug)
     .single();
 
   if (error) throw new Error(error.message);

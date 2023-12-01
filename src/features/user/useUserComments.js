@@ -9,12 +9,12 @@ export function useUserComments() {
     isLoading,
     error,
   } = useQuery({
-    queryKey: [usernameSlug],
+    queryKey: ["comments", usernameSlug],
     queryFn: () => getUserComments(usernameSlug),
   });
 
   if (error)
-    throw new Error(`Kullanıcı bilgileri yüklenemedi: ${error.message}`);
+    throw new Error(`Kullanıcı yorumları yüklenemedi: ${error.message}`);
 
   return { userComments, isLoading };
 }

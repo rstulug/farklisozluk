@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 const max_word = 300;
 
 function CommentItem({ comment }) {
-  console.log(comment);
   const [expandBox, setExpandBox] = useState(false);
   const commentLength = comment.comment.length;
 
@@ -29,7 +28,6 @@ function CommentItem({ comment }) {
     const obj = { numLike: comment.numLike + 1 };
     updateNumLike({ id: comment.id, obj });
   }
-  console.log(comment);
 
   return (
     <li className="mb-5">
