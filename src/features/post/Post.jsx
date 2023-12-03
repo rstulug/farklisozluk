@@ -42,14 +42,14 @@ function Post() {
             comment={comment}
             key={comment.id}
             isLiked={
-              userMeta.liked_comments
+              userMeta?.liked_comments
                 ? userMeta?.liked_comments?.some(
                     (liked) => liked === comment.id,
                   )
                 : false
             }
             isUnliked={
-              userMeta.unliked_comments
+              userMeta?.unliked_comments
                 ? userMeta?.unliked_comments?.some(
                     (unliked) => unliked === comment.id,
                   )
