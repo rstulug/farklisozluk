@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 
 const max_word = 300;
 
-function CommentItem({ comment }) {
+function CommentItem({ comment, isLiked, isUnliked }) {
+  console.log(isLiked, isUnliked);
   const [expandBox, setExpandBox] = useState(false);
   const commentLength = comment.comment.length;
 

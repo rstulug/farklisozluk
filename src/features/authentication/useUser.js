@@ -6,7 +6,6 @@ export function useUser() {
     queryKey: ["user"],
     queryFn: getCurrentUser,
   });
-
   return {
     user: data?.user?.user,
     userMeta: data?.UserMeta,

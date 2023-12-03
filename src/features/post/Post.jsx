@@ -14,15 +14,20 @@ import { Controller, useForm } from "react-hook-form";
 function Post() {
   const { post, isLoading } = usePost();
 
-  const { user, UserMeta } = useUser();
-  console.log(user);
-  console.log(UserMeta);
+  const {
+    user,
+    userMeta,
+    isLoading: isLoadingUser,
+    isAuthenticated,
+  } = useUser();
+  console.log(userMeta);
+
   const { postComments, isLoading: isCommentLoading } = useComments();
   const { handleSubmit, control } = useForm();
 
   const { insertComment, status } = useInsertComment();
 
-  if (isLoading || isCommentLoading) return <Spinner />;
+  if (isLoading || isCommentLoading || isLoadingUser) return <Spinner />;
 
   function onSubmit({ comment }) {
     insertComment({ Post: post.id, User: user.id, comment });
@@ -33,10 +38,27 @@ function Post() {
       <h2 className="mb-5 text-xl font-bold tracking-wide">{post.title}</h2>
       <ul>
         {postComments.map((comment) => (
-          <CommentItem comment={comment} key={comment.id} />
+          <CommentItem
+            comment={comment}
+            key={comment.id}
+            isLiked={
+              userMeta.liked_comments
+                ? userMeta?.liked_comments?.some(
+                    (liked) => liked === comment.id,
+                  )
+                : false
+            }
+            isUnliked={
+              userMeta.unliked_comments
+                ? userMeta?.unliked_comments?.some(
+                    (unliked) => unliked === comment.id,
+                  )
+                : false
+            }
+          />
         ))}
       </ul>
-      {user?.role == "authenticated" && (
+      {isAuthenticated && (
         <form
           className="border-t-2 border-black py-3"
           onSubmit={handleSubmit(onSubmit)}
