@@ -4,6 +4,7 @@ import { format, parseISO } from "date-fns";
 import { useUpdateCommentsUnlike } from "../features/post/useUpdateCommentLike";
 import parse from "html-react-parser";
 import { Link } from "react-router-dom";
+import { IconContext } from "react-icons/lib";
 
 const max_word = 300;
 
@@ -20,13 +21,7 @@ function CommentItem({ comment, isLiked, isUnliked }) {
     setExpandBox((box) => !box);
   }
 
-  function handleUnlikeClick() {
-    const obj = { numUnlike: comment.numUnlike + 1 };
-    updateNumLike({ id: comment.id, obj });
-  }
-
-  function handleLikeClick() {
-    const obj = { numLike: comment.numLike + 1 };
+  function handleLikesInc(obj) {
     updateNumLike({ id: comment.id, obj });
   }
 
@@ -56,19 +51,33 @@ function CommentItem({ comment, isLiked, isUnliked }) {
           <div className="flex flex-row gap-5">
             <button
               title="begenmedim"
-              className="flex items-center justify-center hover:scale-125 hover:rounded-full hover:bg-green-100"
-              onClick={handleUnlikeClick}
+              className="flex  h-7 items-center justify-center"
+              onClick={() =>
+                handleLikesInc({ numUnlike: comment.numUnlike + 1 })
+              }
+              disabled={isLiked || false}
             >
-              <HiArrowSmallDown />
-              {comment.numUnlike}
+              <IconContext.Provider
+                value={{
+                  color: isUnliked ? "red" : "black",
+                }}
+              >
+                <HiArrowSmallDown />
+                {comment.numUnlike}
+              </IconContext.Provider>
             </button>
             <button
               title="begendim bunu"
-              className="flex items-center justify-center hover:scale-125 hover:rounded-full hover:bg-green-100"
-              onClick={handleLikeClick}
+              className="flex h-7 items-center justify-center"
+              onClick={() => handleLikesInc({ numLike: comment.numLike + 1 })}
+              disabled={isLiked || false}
             >
-              <HiArrowSmallUp />
-              {comment.numLike}
+              <IconContext.Provider
+                value={{ color: isLiked ? "green" : "black" }}
+              >
+                <HiArrowSmallUp />
+                {comment.numLike}
+              </IconContext.Provider>
             </button>
           </div>
           <Link
