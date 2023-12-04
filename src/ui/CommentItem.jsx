@@ -9,7 +9,7 @@ import { IconContext } from "react-icons/lib";
 const max_word = 300;
 
 function CommentItem({ comment, isLiked, isUnliked }) {
-  console.log(isLiked, isUnliked);
+  //console.log(isLiked, isUnliked);
   const [expandBox, setExpandBox] = useState(false);
   const commentLength = comment.comment.length;
 

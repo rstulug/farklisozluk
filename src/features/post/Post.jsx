@@ -10,6 +10,7 @@ import { Tiptap } from "../../ui/Tiptap";
 import { useInsertComment } from "./useInsertComment";
 
 import { Controller, useForm } from "react-hook-form";
+import { useCommentInfo } from "./useCommentInfo";
 
 function Post() {
   const { post, isLoading } = usePost();
@@ -20,12 +21,16 @@ function Post() {
     isLoading: isLoadingUser,
     isAuthenticated,
   } = useUser();
-  console.log(userMeta);
 
   const { postComments, isLoading: isCommentLoading } = useComments();
+
   const { handleSubmit, control } = useForm();
 
   const { insertComment, status } = useInsertComment();
+
+  const { commentInfo, isLoading: isLoadingCommentInfo } = useCommentInfo();
+
+  console.log();
 
   if (isLoading || isCommentLoading || isLoadingUser) return <Spinner />;
 
