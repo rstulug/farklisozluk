@@ -8,8 +8,6 @@ function User() {
 
   if (isLoading) return <Spinner />;
 
-  console.log(userData);
-
   if (!userData) return <Empty message="Böyle bir kullanıcı bulamadık" />;
 
   return (

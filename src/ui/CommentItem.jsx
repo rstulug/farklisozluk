@@ -5,23 +5,35 @@ import { useUpdateCommentsUnlike } from "../features/post/useUpdateCommentLike";
 import parse from "html-react-parser";
 import { Link } from "react-router-dom";
 import { IconContext } from "react-icons/lib";
+import { useDeleteCommentInfo } from "../features/post/useDeleteCommentInfo";
+import { useInsertCommentInfo } from "../features/post/useInsertCommentInfo";
+import { useUser } from "../features/authentication/useUser";
 
 const max_word = 300;
 
-function CommentItem({ comment, isLiked, isUnliked }) {
-  //console.log(isLiked, isUnliked);
+function CommentItem({ comment, likeStatus }) {
   const [expandBox, setExpandBox] = useState(false);
   const commentLength = comment.comment.length;
 
   const text = expandBox ? comment.comment : comment.comment.slice(0, max_word);
 
+  const { isAuthenticated } = useUser();
+
   const { updateNumLike } = useUpdateCommentsUnlike();
+  const { deleteCommentInfo, status } = useDeleteCommentInfo();
+  const { insertCommentInfo, insertStatus } = useInsertCommentInfo();
 
   function handleExpandClick() {
     setExpandBox((box) => !box);
   }
 
-  function handleLikesInc(obj) {
+  function handleUpdateLike(obj, commentInfoId) {
+    deleteCommentInfo(commentInfoId);
+    updateNumLike({ id: comment.id, obj });
+  }
+
+  function handleInsertLike(obj, id, newStatus) {
+    insertCommentInfo({ Comment: id, status: newStatus });
     updateNumLike({ id: comment.id, obj });
   }
 
@@ -52,14 +64,28 @@ function CommentItem({ comment, isLiked, isUnliked }) {
             <button
               title="begenmedim"
               className="flex  h-7 items-center justify-center"
-              onClick={() =>
-                handleLikesInc({ numUnlike: comment.numUnlike + 1 })
+              disabled={
+                !isAuthenticated ||
+                likeStatus?.status === 1 ||
+                status.pending ||
+                insertStatus.pending
               }
-              disabled={isLiked || false}
+              onClick={() => {
+                likeStatus?.status === -1
+                  ? handleUpdateLike(
+                      { numUnlike: comment.numUnlike - 1 },
+                      likeStatus.id,
+                    )
+                  : handleInsertLike(
+                      { numUnlike: comment.numUnlike + 1 },
+                      comment.id,
+                      -1,
+                    );
+              }}
             >
               <IconContext.Provider
                 value={{
-                  color: isUnliked ? "red" : "black",
+                  color: likeStatus?.status === -1 ? "red" : "black",
                 }}
               >
                 <HiArrowSmallDown />
@@ -69,11 +95,27 @@ function CommentItem({ comment, isLiked, isUnliked }) {
             <button
               title="begendim bunu"
               className="flex h-7 items-center justify-center"
-              onClick={() => handleLikesInc({ numLike: comment.numLike + 1 })}
-              disabled={isLiked || false}
+              disabled={
+                !isAuthenticated ||
+                likeStatus?.status === -1 ||
+                status.pending ||
+                insertStatus.pending
+              }
+              onClick={() => {
+                likeStatus?.status === 1
+                  ? handleUpdateLike(
+                      { numLike: comment.numLike - 1 },
+                      likeStatus.id,
+                    )
+                  : handleInsertLike(
+                      { numLike: comment.numLike + 1 },
+                      comment.id,
+                      1,
+                    );
+              }}
             >
               <IconContext.Provider
-                value={{ color: isLiked ? "green" : "black" }}
+                value={{ color: likeStatus?.status === 1 ? "green" : "black" }}
               >
                 <HiArrowSmallUp />
                 {comment.numLike}

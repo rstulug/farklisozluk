@@ -15,12 +15,7 @@ import { useCommentInfo } from "./useCommentInfo";
 function Post() {
   const { post, isLoading } = usePost();
 
-  const {
-    user,
-    userMeta,
-    isLoading: isLoadingUser,
-    isAuthenticated,
-  } = useUser();
+  const { user, isLoading: isLoadingUser, isAuthenticated } = useUser();
 
   const { postComments, isLoading: isCommentLoading } = useComments();
 
@@ -30,9 +25,8 @@ function Post() {
 
   const { commentInfo, isLoading: isLoadingCommentInfo } = useCommentInfo();
 
-  console.log();
-
-  if (isLoading || isCommentLoading || isLoadingUser) return <Spinner />;
+  if (isLoading || isCommentLoading || isLoadingUser || isLoadingCommentInfo)
+    return <Spinner />;
 
   function onSubmit({ comment }) {
     insertComment({ Post: post.id, User: user.id, comment });
@@ -46,20 +40,9 @@ function Post() {
           <CommentItem
             comment={comment}
             key={comment.id}
-            isLiked={
-              userMeta?.liked_comments
-                ? userMeta?.liked_comments?.some(
-                    (liked) => liked === comment.id,
-                  )
-                : false
-            }
-            isUnliked={
-              userMeta?.unliked_comments
-                ? userMeta?.unliked_comments?.some(
-                    (unliked) => unliked === comment.id,
-                  )
-                : false
-            }
+            likeStatus={commentInfo?.find(
+              (comInfo) => comInfo.Comment === comment.id,
+            )}
           />
         ))}
       </ul>

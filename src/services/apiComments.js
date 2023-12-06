@@ -48,11 +48,40 @@ export async function getCommentInfo(userId, postId) {
 
   const { data, error } = await supabase
     .from("CommentInfo")
-    .select("Comment, status")
+    .select("id,Comment, status")
     .eq("User", userId)
     .eq("Post", postId);
 
   if (error) throw new Error(error.message);
 
   return data;
+}
+
+export async function getUserCommentInfo(userId) {
+  if (!userId) return null;
+
+  const { data, error } = await supabase
+    .from("CommentInfo")
+    .select("id,Comment, status")
+    .eq("User", userId);
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
+export async function insertCommentInfo(obj) {
+  const { data, error } = await supabase
+    .from("CommentInfo")
+    .insert([obj])
+    .select();
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
+export async function deleteCommentInfo(id) {
+  const { error } = await supabase.from("CommentInfo").delete().eq("id", id);
+
+  if (error) throw new Error(error.message);
 }
