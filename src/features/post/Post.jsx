@@ -23,7 +23,10 @@ function Post() {
 
   const { insertComment, status } = useInsertComment();
 
-  const { commentInfo, isLoading: isLoadingCommentInfo } = useCommentInfo();
+  const { commentInfo, isLoading: isLoadingCommentInfo } = useCommentInfo({
+    userId: user?.id,
+    postId: postComments?.at(0)?.Post,
+  });
 
   if (isLoading || isCommentLoading || isLoadingUser || isLoadingCommentInfo)
     return <Spinner />;

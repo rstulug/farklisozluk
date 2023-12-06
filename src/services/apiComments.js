@@ -43,14 +43,17 @@ export async function insertComment(obj) {
   return data;
 }
 
-export async function getCommentInfo(userId, postId) {
-  if (!userId || !postId) return null;
+export async function getCommentInfo({ userId, postId }) {
+  if (!userId) return null;
 
-  const { data, error } = await supabase
+  let query = supabase
     .from("CommentInfo")
     .select("id,Comment, status")
-    .eq("User", userId)
-    .eq("Post", postId);
+    .eq("User", userId);
+
+  if (postId) query = query.eq("Post", postId);
+
+  const { data, error } = await query;
 
   if (error) throw new Error(error.message);
 

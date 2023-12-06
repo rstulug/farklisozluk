@@ -17,7 +17,7 @@ export function useInsertCommentInfo() {
         status,
       }),
     onSuccess: () =>
-      queryClient.invalidateQueries(["CommentInfo", userMeta.id, post.id]),
+      queryClient.invalidateQueries(["CommentInfo", userMeta.id]),
     onError: (err) => toast.error(err.message),
   });
 
