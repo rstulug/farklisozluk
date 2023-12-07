@@ -7,11 +7,7 @@ export function useInsertComment() {
   const params = useParams();
   const { mutate: insertComment, status } = useMutation({
     mutationFn: insertCommentApi,
-    onSuccess: queryClient.invalidateQueries([
-      "post",
-      "comments",
-      params.postSlug,
-    ]),
+    onSuccess: queryClient.invalidateQueries(["comments", params.postSlug]),
   });
   return { insertComment, status };
 }

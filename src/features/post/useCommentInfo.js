@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getCommentInfo } from "../../services/apiComments";
+import { getPostCommentInfo } from "../../services/apiComments";
 
-export function useCommentInfo({ userId, postId }) {
+export function useCommentInfo({ userId, postId, postTitleSlug }) {
   const { data: commentInfo, isLoading } = useQuery({
-    queryKey: ["CommentInfo", userId],
-    queryFn: () => getCommentInfo({ userId, postId }),
+    queryKey: ["commentInfo", userId, postTitleSlug],
+    queryFn: () => getPostCommentInfo({ userId, postId }),
   });
 
   return { commentInfo, isLoading };

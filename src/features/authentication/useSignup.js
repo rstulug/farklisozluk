@@ -11,7 +11,7 @@ export function useSignup() {
     onError: (err) =>
       toast.error(`Kayıt tamamlanamadı. Muhtemel hata: ${err.message}`),
     onSuccess: (user) => {
-      queryClient.setQueryData(["user"], user.user);
+      queryClient.setQueryData(["user"], { user });
       navigate("/");
     },
   });

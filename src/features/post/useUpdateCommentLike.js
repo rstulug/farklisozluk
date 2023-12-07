@@ -7,11 +7,13 @@ export function useUpdateCommentsUnlike() {
   const queryClient = useQueryClient();
   const params = useParams();
 
+  const updateField = params.postSlug || params.usernameSlug;
+
   const { mutate: updateNumLike, status } = useMutation({
     mutationFn: ({ id, obj }) => updateCommentLikeNumber(id, obj),
     onSuccess: () =>
       queryClient.invalidateQueries({
-        queryKey: ["post", "comments", params.postSlug],
+        queryKey: ["comments", updateField],
       }),
   });
 

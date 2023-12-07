@@ -6,7 +6,7 @@ export function useComments() {
   const { postSlug } = useParams();
 
   const { data: postComments, isLoading } = useQuery({
-    queryKey: ["post", "comments", postSlug],
+    queryKey: ["comments", postSlug],
     queryFn: () => getPostComments(postSlug),
   });
   return { postComments, isLoading };

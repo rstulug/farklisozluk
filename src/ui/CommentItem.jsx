@@ -17,7 +17,7 @@ function CommentItem({ comment, likeStatus }) {
 
   const text = expandBox ? comment.comment : comment.comment.slice(0, max_word);
 
-  const { isAuthenticated } = useUser();
+  const { user, isAuthenticated } = useUser();
 
   const { updateNumLike } = useUpdateCommentsUnlike();
   const { deleteCommentInfo, status } = useDeleteCommentInfo();
@@ -27,13 +27,18 @@ function CommentItem({ comment, likeStatus }) {
     setExpandBox((box) => !box);
   }
 
-  function handleUpdateLike(obj, commentInfoId) {
-    deleteCommentInfo(commentInfoId);
+  function handleUpdateLike(obj, id) {
+    deleteCommentInfo(id);
     updateNumLike({ id: comment.id, obj });
   }
 
-  function handleInsertLike(obj, id, newStatus) {
-    insertCommentInfo({ Comment: id, status: newStatus });
+  function handleInsertLike(obj, userId, postId, commentId, status) {
+    insertCommentInfo({
+      User: userId,
+      Post: postId,
+      Comment: commentId,
+      status: status,
+    });
     updateNumLike({ id: comment.id, obj });
   }
 
@@ -78,7 +83,9 @@ function CommentItem({ comment, likeStatus }) {
                     )
                   : handleInsertLike(
                       { numUnlike: comment.numUnlike + 1 },
-                      comment.id,
+                      user?.id,
+                      comment?.Post?.id,
+                      comment?.id,
                       -1,
                     );
               }}
@@ -109,7 +116,9 @@ function CommentItem({ comment, likeStatus }) {
                     )
                   : handleInsertLike(
                       { numLike: comment.numLike + 1 },
-                      comment.id,
+                      user?.id,
+                      comment?.Post?.id,
+                      comment?.id,
                       1,
                     );
               }}

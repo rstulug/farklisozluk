@@ -25,7 +25,8 @@ function Post() {
 
   const { commentInfo, isLoading: isLoadingCommentInfo } = useCommentInfo({
     userId: user?.id,
-    postId: postComments?.at(0)?.Post,
+    postId: post?.id,
+    postTitleSlug: post?.titleSlug,
   });
 
   if (isLoading || isCommentLoading || isLoadingUser || isLoadingCommentInfo)

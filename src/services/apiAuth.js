@@ -24,7 +24,7 @@ export async function Signup({
       `The new user could not be created. The reason is ${error1.message}`,
     );
 
-  const { data, error2 } = await supabase
+  const { error2 } = await supabase
     .from("UserMeta")
     .insert([
       { id: newUser.user.id, username, usernameSlug, name, surname, gender },

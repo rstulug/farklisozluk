@@ -3,7 +3,7 @@ import supabase from "./supabase";
 export async function getPostComments(slug) {
   const { data, error } = await supabase
     .from("Comment")
-    .select("*,User(username, usernameSlug),Post!inner()")
+    .select("*,User(username, usernameSlug),Post!inner(id, titleSlug)")
     .eq("Post.titleSlug", slug)
     .order("created_at");
 
@@ -15,7 +15,9 @@ export async function getPostComments(slug) {
 export async function getUserComments(slug) {
   const { data, error } = await supabase
     .from("Comment")
-    .select("*,Post(title, titleSlug), User!inner(username, usernameSlug)")
+    .select(
+      "*,Post(id, title, titleSlug), User!inner(id,username, usernameSlug)",
+    )
     .eq("User.usernameSlug", slug)
     .order("created_at");
 
@@ -43,30 +45,28 @@ export async function insertComment(obj) {
   return data;
 }
 
-export async function getCommentInfo({ userId, postId }) {
-  if (!userId) return null;
+export async function getPostCommentInfo({ userId, postId }) {
+  if (!userId || !postId) return null;
 
-  let query = supabase
+  const { data, error } = await supabase
     .from("CommentInfo")
-    .select("id,Comment, status")
-    .eq("User", userId);
-
-  if (postId) query = query.eq("Post", postId);
-
-  const { data, error } = await query;
+    .select("*, Post(*), Comment")
+    .eq("User", userId)
+    .eq("Post", postId);
 
   if (error) throw new Error(error.message);
 
   return data;
 }
 
-export async function getUserCommentInfo(userId) {
-  if (!userId) return null;
+export async function getUserCommentInfo({ userId, secondUserId }) {
+  if (!userId || !secondUserId) return null;
 
   const { data, error } = await supabase
     .from("CommentInfo")
-    .select("id,Comment, status")
-    .eq("User", userId);
+    .select("*, Post(*), Comment!inner()")
+    .eq("User", userId)
+    .eq("Comment.User", secondUserId);
 
   if (error) throw new Error(error.message);
 
