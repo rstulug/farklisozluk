@@ -7,11 +7,13 @@ import { useUser } from "../authentication/useUser";
 import { useUserCommentInfo } from "./useUserCommentInfo";
 
 import { useUserData } from "./useUserData";
+import Pagination from "../../ui/Pagination";
+import { COMMENT_PER_PAGE } from "../../utils/constants";
 
 function UserComments() {
   const { userData, isLoadingUserData } = useUserData();
 
-  const { userComments, isLoading } = useUserComments();
+  const { userComments, count, isLoading } = useUserComments();
 
   const { user } = useUser();
 
@@ -29,17 +31,24 @@ function UserComments() {
     return <Empty message="Bu kullanıcının henüz bir yorumu bulunmuyor" />;
 
   return (
-    <ul>
-      {userComments.map((comment) => (
-        <CommentItem
-          comment={comment}
-          key={comment.id}
-          likeStatus={userCommentInfo?.find(
-            (comInfo) => comInfo.Comment === comment.id,
-          )}
-        />
-      ))}
-    </ul>
+    <>
+      <ul>
+        {userComments.map((comment) => (
+          <CommentItem
+            comment={comment}
+            key={comment.id}
+            likeStatus={userCommentInfo?.find(
+              (comInfo) => comInfo.Comment === comment.id,
+            )}
+          />
+        ))}
+      </ul>
+      {COMMENT_PER_PAGE < count && (
+        <div className="flex justify-end">
+          <Pagination count={count} />
+        </div>
+      )}
+    </>
   );
 }
 

@@ -111,13 +111,17 @@ function SignupForm() {
         </select>
       </FormRow>
 
-      <div className="flex justify-center">
+      <div className="flex flex-row justify-between">
         <Button
           btnName="Kayıt ol"
           type="primary"
           size="large"
           disabled={status.pending}
         />
+        <div className="flex flex-row items-center">
+          <h3 className="font-semibold">Zaten bir hesabın mı var ? </h3>
+          <Button btnName="Giriş Yap" type="light" size="small" to="/login" />
+        </div>
       </div>
     </Form>
   );

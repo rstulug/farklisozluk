@@ -1,29 +1,40 @@
 import supabase from "./supabase";
+import { COMMENT_PER_PAGE } from "../utils/constants";
 
-export async function getPostComments(slug) {
-  const { data, error } = await supabase
+export async function getPostComments({ postSlug, curPage }) {
+  const from = (curPage - 1) * COMMENT_PER_PAGE;
+  const to = from + COMMENT_PER_PAGE - 1;
+  const { data, count, error } = await supabase
     .from("Comment")
-    .select("*,User(username, usernameSlug),Post!inner(id, titleSlug)")
-    .eq("Post.titleSlug", slug)
-    .order("created_at");
+    .select("*,User(username, usernameSlug),Post!inner(id, titleSlug)", {
+      count: "exact",
+    })
+    .eq("Post.titleSlug", postSlug)
+    .order("created_at")
+    .range(from, to);
 
   if (error) throw new Error(error.message);
 
-  return data;
+  return { data, count };
 }
 
-export async function getUserComments(slug) {
-  const { data, error } = await supabase
+export async function getUserComments({ usernameSlug, curPage }) {
+  const from = (curPage - 1) * COMMENT_PER_PAGE;
+  const to = from + COMMENT_PER_PAGE - 1;
+
+  const { data, count, error } = await supabase
     .from("Comment")
     .select(
       "*,Post(id, title, titleSlug), User!inner(id,username, usernameSlug)",
+      { count: "exact" },
     )
-    .eq("User.usernameSlug", slug)
-    .order("created_at");
+    .eq("User.usernameSlug", usernameSlug)
+    .order("created_at")
+    .range(from, to);
 
   if (error) throw new Error(error.message);
 
-  return data;
+  return { data, count };
 }
 
 export async function updateCommentLikeNumber(id, obj) {

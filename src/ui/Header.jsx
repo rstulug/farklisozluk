@@ -34,14 +34,6 @@ function Header() {
             disabled={status.pending}
           />
         </div>
-      ) : location.pathname === "/login" ? (
-        <div>
-          <Button btnName="Kayıt Ol" type="green" size="small" to="/signup" />
-        </div>
-      ) : location.pathname === "/signup" ? (
-        <div>
-          <Button btnName="Giriş Yap" type="green" size="small" to="/login" />
-        </div>
       ) : (
         <div>
           <Button btnName="Giriş Yap" type="green" size="small" to="/login" />

@@ -11,13 +11,15 @@ import { useInsertComment } from "./useInsertComment";
 
 import { Controller, useForm } from "react-hook-form";
 import { useCommentInfo } from "./useCommentInfo";
+import Pagination from "../../ui/Pagination";
+import { COMMENT_PER_PAGE } from "../../utils/constants";
 
 function Post() {
   const { post, isLoading } = usePost();
 
   const { user, isLoading: isLoadingUser, isAuthenticated } = useUser();
 
-  const { postComments, isLoading: isCommentLoading } = useComments();
+  const { postComments, count, isLoading: isCommentLoading } = useComments();
 
   const { handleSubmit, control } = useForm();
 
@@ -49,6 +51,11 @@ function Post() {
             )}
           />
         ))}
+        {COMMENT_PER_PAGE < count && (
+          <div className="flex justify-end">
+            <Pagination count={count} />
+          </div>
+        )}
       </ul>
       {isAuthenticated && (
         <form
