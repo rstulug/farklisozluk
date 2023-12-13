@@ -1,3 +1,4 @@
+import { POST_PER_PAGE } from "../utils/constants";
 import supabase from "./supabase";
 
 export async function submitnewPost(newPost) {
@@ -6,15 +7,18 @@ export async function submitnewPost(newPost) {
   return data;
 }
 
-export async function getAllPost() {
-  const { data, error } = await supabase
+export async function getAllPost({ curPage }) {
+  const from = (curPage - 1) * POST_PER_PAGE;
+  const to = from + POST_PER_PAGE - 1;
+  const { data, count, error } = await supabase
     .from("Post")
-    .select("*")
-    .order("created_at");
+    .select("*", { count: "exact" })
+    .order("created_at")
+    .range(from, to);
 
   if (error) throw new Error("The posts data could not be loaded");
 
-  return data;
+  return { data, count };
 }
 
 export async function getPost(slug) {

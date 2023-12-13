@@ -1,9 +1,11 @@
 import { usePosts } from "../features/dashboard/usePosts";
+import { POST_PER_PAGE } from "../utils/constants";
+import PaginationSidebar from "./PaginationSidebar";
 import SidebarItem from "./SidebarItem";
 import Spinner from "./Spinner";
 
 function Sidebar() {
-  const { posts, isLoading } = usePosts();
+  const { posts, count, isLoading } = usePosts();
   if (isLoading) return <Spinner />;
 
   return (
@@ -13,6 +15,11 @@ function Sidebar() {
           <SidebarItem key={post.id} post={post} />
         ))}
       </ul>
+      {POST_PER_PAGE < count && (
+        <div className="flex justify-end">
+          <PaginationSidebar count={count} />
+        </div>
+      )}
     </div>
   );
 }
