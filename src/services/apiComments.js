@@ -1,5 +1,6 @@
 import supabase from "./supabase";
 import { COMMENT_PER_PAGE } from "../utils/constants";
+import { getToday, getTwoDaysBefore, getYesterday } from "../utils/helpers";
 
 export async function getPostComments({ postSlug, curPage }) {
   const from = (curPage - 1) * COMMENT_PER_PAGE;
@@ -98,4 +99,72 @@ export async function deleteCommentInfo(id) {
   const { error } = await supabase.from("CommentInfo").delete().eq("id", id);
 
   if (error) throw new Error(error.message);
+}
+
+export async function getHighestLikedComment() {
+  const { data, error } = await supabase
+    .from("Comment")
+    .select("*,Post(id, title, titleSlug), User(username, usernameSlug)")
+    .order("numLike", { ascending: false })
+    .limit(1)
+    .single();
+
+  if (error)
+    throw new Error(
+      `En yüksek beğeni alan yorum çekilemedi. Muhtemel hata: ${error.message}`,
+    );
+
+  return data;
+}
+
+export async function getLowestLikedComment() {
+  const { data, error } = await supabase
+    .from("Comment")
+    .select("*,Post(id, title, titleSlug), User(username, usernameSlug)")
+    .order("numUnlike", { ascending: false })
+    .limit(1)
+    .single();
+
+  if (error)
+    throw new Error(
+      `En düşük beğeni alan yorum çekilemedi. Muhtemel hata: ${error.message}`,
+    );
+
+  return data;
+}
+
+export async function getHighestLikedCommentLastDay() {
+  const { data, error } = await supabase
+    .from("Comment")
+    .select("*,Post(id, title, titleSlug), User(username, usernameSlug)")
+    .gte("created_at", getTwoDaysBefore({ end: true }))
+    .lte("created_at", getYesterday({ end: true }))
+    .order("numLike", { ascending: false })
+    .limit(1)
+    .single();
+
+  if (error)
+    throw new Error(
+      `En yüksek beğeni alan yorum çekilemedi. Muhtemel hata: ${error.message}`,
+    );
+
+  return data;
+}
+
+export async function getLowestLikedCommentLastDay() {
+  const { data, error } = await supabase
+    .from("Comment")
+    .select("*,Post(id, title, titleSlug), User(username, usernameSlug)")
+    .gte("created_at", getTwoDaysBefore({ end: true }))
+    .lte("created_at", getYesterday({ end: true }))
+    .order("numUnlike", { ascending: false })
+    .limit(1)
+    .single();
+
+  if (error)
+    throw new Error(
+      `En yüksek beğeni alan yorum çekilemedi. Muhtemel hata: ${error.message}`,
+    );
+
+  return data;
 }

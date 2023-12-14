@@ -11,7 +11,7 @@ import { useUser } from "../features/authentication/useUser";
 
 const max_word = 300;
 
-function CommentItem({ comment, likeStatus }) {
+function CommentItem({ comment, likeStatus, disabled = false }) {
   const [expandBox, setExpandBox] = useState(false);
   const commentLength = comment.comment.length;
 
@@ -43,7 +43,7 @@ function CommentItem({ comment, likeStatus }) {
   }
 
   return (
-    <li className="mb-5">
+    <li className="mb-5 list-none">
       {comment?.Post?.titleSlug && (
         <Link
           to={`/posts/${comment.Post.titleSlug}`}
@@ -73,7 +73,8 @@ function CommentItem({ comment, likeStatus }) {
                 !isAuthenticated ||
                 likeStatus?.status === 1 ||
                 status.pending ||
-                insertStatus.pending
+                insertStatus.pending ||
+                disabled
               }
               onClick={() => {
                 likeStatus?.status === -1
@@ -106,7 +107,8 @@ function CommentItem({ comment, likeStatus }) {
                 !isAuthenticated ||
                 likeStatus?.status === -1 ||
                 status.pending ||
-                insertStatus.pending
+                insertStatus.pending ||
+                disabled
               }
               onClick={() => {
                 likeStatus?.status === 1

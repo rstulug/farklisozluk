@@ -13,7 +13,7 @@ export async function getAllPost({ curPage }) {
   const { data, count, error } = await supabase
     .from("Post")
     .select("*", { count: "exact" })
-    .order("created_at")
+    .order("created_at", { ascending: false })
     .range(from, to);
 
   if (error) throw new Error("The posts data could not be loaded");
