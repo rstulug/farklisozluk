@@ -21,7 +21,7 @@ function Post() {
 
   const { postComments, count, isLoading: isCommentLoading } = useComments();
 
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control, reset } = useForm();
 
   const { insertComment, status } = useInsertComment();
 
@@ -66,8 +66,13 @@ function Post() {
             {`${post.title} hakkında bir şeyler yaz`}
           </label>
           <Controller
-            render={({ field, fieldState }) => (
-              <Tiptap onChange={field.onChange} error={fieldState?.error} />
+            render={({ field, fieldState, formState }) => (
+              <Tiptap
+                onChange={field.onChange}
+                error={fieldState?.error}
+                formState={formState}
+                reset={reset}
+              />
             )}
             control={control}
             name="comment"

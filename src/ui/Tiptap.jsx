@@ -12,7 +12,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
 const MenuBar = ({ editor }) => {
   const setLink = useCallback(() => {
@@ -102,7 +102,7 @@ const MenuBar = ({ editor }) => {
 
 //export default MenuBar;
 
-export const Tiptap = ({ onChange, error }) => {
+export const Tiptap = ({ onChange, error, formState, reset }) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -124,6 +124,14 @@ export const Tiptap = ({ onChange, error }) => {
       onChange(html);
     },
   });
+
+  useEffect(
+    function () {
+      editor?.commands?.clearContent();
+      reset();
+    },
+    [formState.isSubmitted, editor, reset],
+  );
 
   return (
     <div className=" flex flex-row gap-5">

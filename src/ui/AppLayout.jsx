@@ -21,7 +21,7 @@ function AppLayout() {
             {outlet ? <Outlet /> : <Dashboard />}
           </div>
         </div>
-        <div className="sticky bottom-0 left-0 flex h-10 w-full items-center justify-center border-t-2 border-gray-500 bg-stone-200">
+        <div className="fixed bottom-0 left-0 flex h-10 w-full items-center justify-center border-t-2 border-gray-500 bg-stone-200">
           <Footer />
         </div>
       </div>

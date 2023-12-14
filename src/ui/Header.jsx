@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "./Button";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
@@ -7,7 +7,6 @@ import { useLogout } from "../features/authentication/useLogout";
 import Spinner from "../ui/Spinner";
 
 function Header() {
-  const location = useLocation();
   const { logout, status } = useLogout();
   const { user, isLoading } = useUser();
 
@@ -15,17 +14,26 @@ function Header() {
 
   return (
     <div className="mb-2 mt-2 flex items-center justify-between">
-      <Link className="w-25 flex items-center" to={"/"}>
+      <Link className="flex w-1/6 items-center" to={"/"}>
         <Logo />
         <h3>Farkli Sozluk</h3>
       </Link>
 
       <SearchBar />
       {user?.user_metadata?.username && !isLoading ? (
-        <div className="font-xl flex flex-row items-center justify-center gap-2">
-          <Link to={`/users/${user.user_metadata.usernameSlug}`}>
+        <div className="font-xl flex w-2/6 flex-row items-center justify-center gap-2">
+          <Link
+            to={`/users/${user.user_metadata.usernameSlug}`}
+            className="font-italic text-md  hover:font-semibold"
+          >
             {user?.user_metadata?.username}
           </Link>
+          <Button
+            btnName="Yeni Post oluştur"
+            type="green"
+            size="small"
+            to="/new-post"
+          />
           <Button
             btnName="Çıkış Yap"
             type="alternative"
