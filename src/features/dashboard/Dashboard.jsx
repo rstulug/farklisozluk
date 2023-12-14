@@ -19,7 +19,7 @@ function Dashboard() {
   return (
     <div className="ml-4 mt-2">
       {headers.map((head, i) => (
-        <>
+        <div key={i}>
           <h3 className="font-italix mb-2 border-b-2 border-b-gray-400 py-2 text-xl font-bold text-gray-400">
             {head}
           </h3>
@@ -28,7 +28,7 @@ function Dashboard() {
           ) : (
             <EmptyComment message="Yok böyle bir şey" key={i} />
           )}
-        </>
+        </div>
       ))}
     </div>
   );
