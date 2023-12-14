@@ -12,9 +12,6 @@ function Dashboard() {
     "Tüm zamanların en beğenilmeyen yorumu",
     "Dünün en beğenilen Yorumu",
     "Dünün en beğenilmeyen yorumu",
-    "deneme olacak bu ",
-    "ikinci denemeyi buraya koyuyorum",
-    "ikinci denemeyi buraya koyuyorum",
   ];
 
   if (isLoading) return <Spinner />;
@@ -27,9 +24,9 @@ function Dashboard() {
             {head}
           </h3>
           {data[i] ? (
-            <CommentItem comment={data[i]} />
+            <CommentItem comment={data[i]} key={data[i].id} />
           ) : (
-            <EmptyComment message="Yok böyle bir şey" />
+            <EmptyComment message="Yok böyle bir şey" key={i} />
           )}
         </>
       ))}
