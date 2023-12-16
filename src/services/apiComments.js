@@ -143,6 +143,8 @@ export async function getHighestLikedCommentLastDay() {
     .limit(1)
     .single();
 
+  if (!data) return null;
+
   if (error)
     throw new Error(
       `En yüksek beğeni alan yorum çekilemedi. Muhtemel hata: ${error.message}`,
@@ -160,6 +162,8 @@ export async function getLowestLikedCommentLastDay() {
     .order("numUnlike", { ascending: false })
     .limit(1)
     .single();
+
+  if (!data) return null;
 
   if (error)
     throw new Error(
