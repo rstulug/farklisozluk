@@ -112,6 +112,7 @@ export const Tiptap = ({ onChange, error, formState, reset }) => {
         HTMLAttributes: { class: "text-blue-500 underline" },
       }),
     ],
+    content: "",
 
     editorProps: {
       attributes: {
@@ -120,7 +121,8 @@ export const Tiptap = ({ onChange, error, formState, reset }) => {
     },
 
     onUpdate: ({ editor }) => {
-      const html = editor.getText();
+      let html = editor.getHTML();
+      if (html === "<p></p>") html = "";
       onChange(html);
     },
   });
@@ -130,7 +132,7 @@ export const Tiptap = ({ onChange, error, formState, reset }) => {
       editor?.commands?.clearContent();
       reset();
     },
-    [formState.isSubmitted, editor, reset],
+    [formState.isSubmitSuccessful, editor, reset],
   );
 
   return (

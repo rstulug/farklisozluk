@@ -10,7 +10,7 @@ import ProtectedRoute from "../../ui/ProtectedRoute";
 
 function NewPostForm() {
   const { user } = useUser();
-  const { control, handleSubmit, register, formState } = useForm();
+  const { control, handleSubmit, register, formState, reset } = useForm();
   const { errors } = formState;
   const { insertPost, status } = useInsertPost();
 
@@ -42,8 +42,13 @@ function NewPostForm() {
         </FormRow>
         <FormRow label="Yorumunuz nedir" />
         <Controller
-          render={({ field, fieldState }) => (
-            <Tiptap onChange={field.onChange} error={fieldState?.error} />
+          render={({ field, fieldState, formState }) => (
+            <Tiptap
+              onChange={field.onChange}
+              error={fieldState?.error}
+              formState={formState}
+              reset={reset}
+            />
           )}
           control={control}
           name="comment"

@@ -32,7 +32,7 @@ function Header() {
             btnName="Yeni Post oluştur"
             type="green"
             size="small"
-            to="/new-post"
+            to={"/new-post/"}
           />
           <Button
             btnName="Çıkış Yap"

@@ -24,7 +24,7 @@ function Dashboard() {
             {head}
           </h3>
           {data[i] ? (
-            <CommentItem comment={data[i]} key={data[i].id} />
+            <CommentItem comment={data[i]} key={data[i].id} disabled={true} />
           ) : (
             <EmptyComment message="Yok böyle bir şey" key={i} />
           )}

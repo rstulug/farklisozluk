@@ -7,7 +7,7 @@ export async function getPostComments({ postSlug, curPage }) {
   const to = from + COMMENT_PER_PAGE - 1;
   const { data, count, error } = await supabase
     .from("Comment")
-    .select("*,User(username, usernameSlug),Post!inner(id, titleSlug)", {
+    .select("*,User(id, username, usernameSlug),Post!inner(id, titleSlug)", {
       count: "exact",
     })
     .eq("Post.titleSlug", postSlug)
@@ -171,4 +171,13 @@ export async function getLowestLikedCommentLastDay() {
     );
 
   return data;
+}
+
+export async function deleteComment(id) {
+  const { error } = await supabase.from("Comment").delete().eq("id", id);
+
+  if (error)
+    throw new Error(
+      `Yorumu silerken bir hata oluştu. Muhtemel hata:${error.message}`,
+    );
 }

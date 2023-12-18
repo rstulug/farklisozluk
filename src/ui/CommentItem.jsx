@@ -8,14 +8,16 @@ import { IconContext } from "react-icons/lib";
 import { useDeleteCommentInfo } from "../features/post/useDeleteCommentInfo";
 import { useInsertCommentInfo } from "../features/post/useInsertCommentInfo";
 import { useUser } from "../features/authentication/useUser";
-
-const max_word = 300;
+import { MAX_COMMENT_WORD } from "../utils/constants";
 
 function CommentItem({ comment, likeStatus, disabled = false }) {
+  console.log(comment);
   const [expandBox, setExpandBox] = useState(false);
   const commentLength = comment.comment.length;
 
-  const text = expandBox ? comment.comment : comment.comment.slice(0, max_word);
+  const text = expandBox
+    ? comment.comment
+    : comment.comment.slice(0, MAX_COMMENT_WORD);
 
   const { user, isAuthenticated } = useUser();
 
@@ -54,8 +56,8 @@ function CommentItem({ comment, likeStatus, disabled = false }) {
       )}
       <div className="flex flex-col">
         <div className="mb-2 mt-4">
-          <p className="text-justify">{parse(text)}</p>
-          {commentLength > max_word && (
+          <div className="text-justify">{parse(text)}</div>
+          {commentLength > MAX_COMMENT_WORD && (
             <button
               onClick={handleExpandClick}
               className="ml-2 font-light hover:text-gray-500"
