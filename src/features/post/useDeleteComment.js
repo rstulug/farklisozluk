@@ -13,14 +13,14 @@ export function useDeleteComment() {
 
   const queryClient = useQueryClient();
   const { mutate: deleteComment, isLoading: isDeleting } = useMutation({
-    mutationFn: ({ id }) => deleteCommentApi(id),
+    mutationFn: deleteCommentApi,
     onSuccess: () => {
       queryClient.invalidateQueries(["comments", params.postSlug, curPage]);
       toast.success("Yorum başarıyla silindi");
     },
-    onError: () =>
+    onError: (err) =>
       toast.error(
-        "Yorum silinirken bir hata oluştu. Bir müddet sonra tekrar deneyin",
+        `Yorum silinirken bir hata oluştu. Bir müddet sonra tekrar deneyin. Muhtemel hata nedeni: ${err.message}`,
       ),
   });
   return { isDeleting, deleteComment };

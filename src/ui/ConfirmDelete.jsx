@@ -1,28 +1,22 @@
-import { IconContext } from "react-icons";
-import { FaTimes } from "react-icons/fa";
+import { useDeleteComment } from "../features/post/useDeleteComment";
 import Button from "./Button";
 
-function ConfirmDelete() {
+function ConfirmDelete({ id }) {
+  const { isDeleting, deleteComment } = useDeleteComment();
   return (
-    <div className="flex min-h-screen w-full items-center justify-center backdrop-blur-xl">
+    <div className="flex  w-full items-center justify-center backdrop-blur-xl">
       <div className="m-auto flex  w-3/6 flex-col justify-center bg-white">
-        <div className="flex w-full justify-end">
-          <button className="px-4 hover:rounded-lg hover:bg-slate-300">
-            <IconContext.Provider
-              value={{
-                style: { color: "black", height: "50px", width: "20px" },
-              }}
-            >
-              <FaTimes />
-            </IconContext.Provider>
-          </button>
-        </div>
-        <div className="mx-4 my-2 items-center text-center text-xl font-bold">
+        <div className="mx-2 my-3 items-center text-center text-xl font-bold">
           Gerçekten bu yorumu silmek istiyor musun ? Bu işlem geri alınamaz.
         </div>
         <div className="flex justify-center">
-          <Button btnName="Sil" type="red" size="small" />
-          <Button btnName="Vazgeç" type="green" size="small" />
+          <Button
+            btnName="Onaylıyorum"
+            type="red"
+            size="small"
+            onClick={() => deleteComment(id)}
+            disabled={isDeleting}
+          />
         </div>
       </div>
     </div>

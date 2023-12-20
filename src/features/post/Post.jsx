@@ -13,7 +13,6 @@ import { Controller, useForm } from "react-hook-form";
 import { useCommentInfo } from "./useCommentInfo";
 import Pagination from "../../ui/Pagination";
 import { COMMENT_PER_PAGE } from "../../utils/constants";
-import ConfirmDelete from "../../ui/ConfirmDelete";
 
 function Post() {
   const { post, isLoading } = usePost();
