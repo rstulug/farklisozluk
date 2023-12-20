@@ -11,6 +11,7 @@ import { useUser } from "../features/authentication/useUser";
 import { MAX_COMMENT_WORD } from "../utils/constants";
 import ModalUI from "./Modal";
 import ConfirmDelete from "./ConfirmDelete";
+import ToggleMenus from "./ToggleMenus";
 
 function CommentItem({ comment, likeStatus, disabled = false }) {
   const [expandBox, setExpandBox] = useState(false);
@@ -21,7 +22,6 @@ function CommentItem({ comment, likeStatus, disabled = false }) {
     : comment.comment.slice(0, MAX_COMMENT_WORD);
 
   const { user, isAuthenticated } = useUser();
-  console.log(user);
 
   const { updateNumLike } = useUpdateCommentsUnlike();
   const { deleteCommentInfo, status } = useDeleteCommentInfo();
@@ -136,11 +136,17 @@ function CommentItem({ comment, likeStatus, disabled = false }) {
                 {comment.numLike}
               </IconContext.Provider>
             </button>
-            {user && comment.User.id === user.id && (
-              <ModalUI btnName="Yorumu Sil">
-                <ConfirmDelete id={comment?.id} />
-              </ModalUI>
-            )}
+            <ToggleMenus>
+              <ToggleMenus.Toggle />
+              <ToggleMenus.List>
+                <ToggleMenus.Button>
+                  <p>deneme</p>
+                  {/* <ModalUI btnName="Yorumu Sil">
+                    <ConfirmDelete id={comment?.id} />
+                  </ModalUI> */}
+                </ToggleMenus.Button>
+              </ToggleMenus.List>
+            </ToggleMenus>
           </div>
           <Link
             to={`/users/${comment.User.usernameSlug}`}
