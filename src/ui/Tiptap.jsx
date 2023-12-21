@@ -136,8 +136,8 @@ export const Tiptap = ({ onChange, error, formState, reset, content = "" }) => {
   );
 
   return (
-    <div className=" flex flex-row gap-5">
-      <div className=" h-48 w-4/6 rounded-sm border-2 border-gray-400 shadow-xl">
+    <div className="flex  flex-row gap-5">
+      <div className=" h-56 w-[50rem] rounded-sm border-2 border-gray-400 shadow-xl">
         <MenuBar editor={editor} />
         <EditorContent editor={editor} />
       </div>

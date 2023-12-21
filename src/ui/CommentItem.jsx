@@ -9,7 +9,7 @@ import { useDeleteCommentInfo } from "../features/comment/useDeleteCommentInfo";
 import { useInsertCommentInfo } from "../features/comment/useInsertCommentInfo";
 import { useUser } from "../features/authentication/useUser";
 import { MAX_COMMENT_WORD } from "../utils/constants";
-import ModalUI from "./Modal";
+import { ModalUIProvider } from "./Modal";
 import ConfirmDelete from "./ConfirmDelete";
 import ToggleMenus from "./ToggleMenus";
 import UpdateComment from "./UpdateComment";
@@ -148,19 +148,19 @@ function CommentItem({ comment, likeStatus, disabled = false }) {
                 <ToggleMenus.List id={comment.id}>
                   {user && comment.User.id === user.id && (
                     <ToggleMenus.ListItem>
-                      <ModalUI btnName="yorumu sil">
+                      <ModalUIProvider btnName="yorumu sil">
                         <ConfirmDelete id={comment.id} />
-                      </ModalUI>
+                      </ModalUIProvider>
                     </ToggleMenus.ListItem>
                   )}
                   {user && comment.User.id === user.id && (
                     <ToggleMenus.ListItem>
-                      <ModalUI btnName="yorumu düzenle">
+                      <ModalUIProvider btnName="yorumu düzenle">
                         <UpdateComment
                           id={comment.id}
                           comment={comment.comment}
                         />
-                      </ModalUI>
+                      </ModalUIProvider>
                     </ToggleMenus.ListItem>
                   )}
                   <ToggleMenus.ListItem>şikayet et</ToggleMenus.ListItem>

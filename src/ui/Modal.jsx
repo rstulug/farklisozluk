@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import Modal from "react-modal";
 import { IconContext } from "react-icons";
 import { FaTimes } from "react-icons/fa";
@@ -16,7 +16,9 @@ const customStyles = {
   },
 };
 
-function ModalUI({ btnName, children }) {
+const ModalContext = createContext();
+
+function ModalUIProvider({ btnName, children }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   function openModal(e) {
@@ -32,32 +34,41 @@ function ModalUI({ btnName, children }) {
     e.stopPropagation();
   }
   return (
-    <div onClick={handleStopPropagation}>
-      <p onClick={openModal}> {btnName}</p>
+    <ModalContext.Provider value={{ closeModal }}>
+      <div onClick={handleStopPropagation}>
+        <p onClick={openModal}> {btnName}</p>
 
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-      >
-        <div className="flex justify-end">
-          <button
-            className="px-4 hover:rounded-lg hover:bg-slate-300"
-            onClick={closeModal}
-          >
-            <IconContext.Provider
-              value={{
-                style: { color: "black", height: "50px", width: "20px" },
-              }}
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+        >
+          <div className="flex justify-end">
+            <button
+              className="px-4 hover:rounded-lg hover:bg-slate-300"
+              onClick={closeModal}
             >
-              <FaTimes />
-            </IconContext.Provider>
-          </button>
-        </div>
-        {children}
-      </Modal>
-    </div>
+              <IconContext.Provider
+                value={{
+                  style: { color: "black", height: "50px", width: "20px" },
+                }}
+              >
+                <FaTimes />
+              </IconContext.Provider>
+            </button>
+          </div>
+          {children}
+        </Modal>
+      </div>
+    </ModalContext.Provider>
   );
 }
 
-export default ModalUI;
+function useModal() {
+  const context = useContext(ModalContext);
+  if (context === undefined)
+    throw new Error("Modal context used outside the modalcontext provider");
+  return context;
+}
+
+export { ModalUIProvider, useModal };
