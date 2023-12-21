@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { HiArrowSmallDown, HiArrowSmallUp } from "react-icons/hi2";
 import { format, parseISO } from "date-fns";
-import { useUpdateCommentsUnlike } from "../features/post/useUpdateCommentLike";
+import { useUpdateCommentsUnlike } from "../features/comment/useUpdateCommentLike";
 import parse from "html-react-parser";
 import { Link } from "react-router-dom";
 import { IconContext } from "react-icons/lib";
-import { useDeleteCommentInfo } from "../features/post/useDeleteCommentInfo";
-import { useInsertCommentInfo } from "../features/post/useInsertCommentInfo";
+import { useDeleteCommentInfo } from "../features/comment/useDeleteCommentInfo";
+import { useInsertCommentInfo } from "../features/comment/useInsertCommentInfo";
 import { useUser } from "../features/authentication/useUser";
 import { MAX_COMMENT_WORD } from "../utils/constants";
 import ModalUI from "./Modal";
 import ConfirmDelete from "./ConfirmDelete";
 import ToggleMenus from "./ToggleMenus";
+import UpdateComment from "./UpdateComment";
 
 function CommentItem({ comment, likeStatus, disabled = false }) {
   const [expandBox, setExpandBox] = useState(false);
@@ -149,6 +150,16 @@ function CommentItem({ comment, likeStatus, disabled = false }) {
                     <ToggleMenus.ListItem>
                       <ModalUI btnName="yorumu sil">
                         <ConfirmDelete id={comment?.id} />
+                      </ModalUI>
+                    </ToggleMenus.ListItem>
+                  )}
+                  {user && comment.User.id === user.id && (
+                    <ToggleMenus.ListItem>
+                      <ModalUI btnName="yorumu düzenle">
+                        <UpdateComment
+                          id={comment.id}
+                          comment={comment.comment}
+                        />
                       </ModalUI>
                     </ToggleMenus.ListItem>
                   )}

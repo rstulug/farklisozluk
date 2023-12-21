@@ -2,15 +2,15 @@ import CommentItem from "../../ui/CommentItem";
 import Spinner from "../../ui/Spinner";
 import Button from "../../ui/Button";
 
-import { useComments } from "./useComments";
+import { useComments } from "../comment/useComments";
 import { usePost } from "./usePost";
 import { useUser } from "../authentication/useUser";
 
 import { Tiptap } from "../../ui/Tiptap";
-import { useInsertComment } from "./useInsertComment";
+import { useInsertComment } from "../comment/useInsertComment";
 
 import { Controller, useForm } from "react-hook-form";
-import { useCommentInfo } from "./useCommentInfo";
+import { useCommentInfo } from "../comment/useCommentInfo";
 import Pagination from "../../ui/Pagination";
 import { COMMENT_PER_PAGE } from "../../utils/constants";
 

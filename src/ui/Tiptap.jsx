@@ -102,7 +102,7 @@ const MenuBar = ({ editor }) => {
 
 //export default MenuBar;
 
-export const Tiptap = ({ onChange, error, formState, reset }) => {
+export const Tiptap = ({ onChange, error, formState, reset, content = "" }) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -112,7 +112,7 @@ export const Tiptap = ({ onChange, error, formState, reset }) => {
         HTMLAttributes: { class: "text-blue-500 underline" },
       }),
     ],
-    content: "",
+    content: content,
 
     editorProps: {
       attributes: {

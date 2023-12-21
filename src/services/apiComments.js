@@ -181,3 +181,18 @@ export async function deleteComment(id) {
       `Yorumu silerken bir hata oluştu. Muhtemel hata:${error.message}`,
     );
 }
+
+export async function updateComment({ id, obj }) {
+  const { data, error } = await supabase
+    .from("Comment")
+    .update(obj)
+    .eq("id", id)
+    .select();
+
+  if (error)
+    throw new Error(
+      `Yorum düzenleme işlemi başarısız. Muhtemel hata: ${error.message}`,
+    );
+
+  return data;
+}

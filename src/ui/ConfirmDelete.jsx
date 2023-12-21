@@ -1,4 +1,4 @@
-import { useDeleteComment } from "../features/post/useDeleteComment";
+import { useDeleteComment } from "../features/comment/useDeleteComment";
 import Button from "./Button";
 
 function ConfirmDelete({ id }) {

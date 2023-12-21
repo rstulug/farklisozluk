@@ -27,8 +27,12 @@ function ModalUI({ btnName, children }) {
   function closeModal() {
     setModalIsOpen(false);
   }
+
+  function handleStopPropagation(e) {
+    e.stopPropagation();
+  }
   return (
-    <>
+    <div onClick={handleStopPropagation}>
       <p onClick={openModal}> {btnName}</p>
 
       <Modal
@@ -52,7 +56,7 @@ function ModalUI({ btnName, children }) {
         </div>
         {children}
       </Modal>
-    </>
+    </div>
   );
 }
 
