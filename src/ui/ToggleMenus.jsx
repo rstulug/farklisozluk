@@ -1,70 +1,78 @@
 import { createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { FaEllipsisH } from "react-icons/fa";
+import { useOutsideClick } from "../hooks.js/useOutsideClick";
 
 const MenusContext = createContext();
 
 function ToggleMenus({ children }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [position, setPosition] = useState(null);
-  const open = () => setIsOpen(true);
-  const close = () => setIsOpen(false);
+  const [openId, setOpenId] = useState("");
+
+  const open = (id) => setOpenId(id);
+  const close = () => setOpenId("");
   return (
-    <MenusContext.Provider
-      value={{ open, close, isOpen, position, setPosition }}
-    >
+    <MenusContext.Provider value={{ open, close, openId }}>
       {children}
     </MenusContext.Provider>
   );
 }
 
-function Toggle() {
-  const { open, close, isOpen, setPosition } = useContext(MenusContext);
+function Toggle({ id }) {
+  const { open, close, openId } = useContext(MenusContext);
 
   function handleClick(e) {
     e.stopPropagation();
-    const rect = e.target.closest("button").getBoundingClientRect();
-    setPosition({
-      x: window.innerWidth - rect.width - rect.x,
-      y: rect.y + rect.height + 8,
-    });
 
-    isOpen ? close() : open();
+    openId === "" || openId !== id ? open(id) : close();
   }
 
   return (
-    <button onClick={handleClick} className="relative">
+    <button
+      onClick={handleClick}
+      id={`ToggleButton_${id}`}
+      className="relative"
+    >
       <FaEllipsisH />
     </button>
   );
 }
 
-function List({ children }) {
-  const { position, isOpen } = useContext(MenusContext);
-  const { x, y } = position || {};
+function List({ children, id }) {
+  const { openId, close } = useContext(MenusContext);
 
-  if (!isOpen) return null;
+  const ref = useOutsideClick(close, false);
 
-  return (
+  if (openId !== id) return null;
+
+  return createPortal(
     <ul
-      className={`fixed list-none right-${x} top-${y} h-45 w-2/6 bg-red-400 `}
+      className="absolute bottom-[30px] right-[0]  flex  flex-col justify-center gap-1 rounded-md bg-stone-300 px-2 py-2"
+      ref={ref}
     >
-      {createPortal(children, document.body)}
-    </ul>
+      {children}
+    </ul>,
+    document.getElementById(`ToggleButton_${id}`),
   );
 }
 
-function Button({ children, onClick }) {
+function ListItem({ children, onClick }) {
   const { close } = useContext(MenusContext);
   function handleClick() {
     onClick?.();
     close();
   }
 
-  return <li onClick={handleClick}>{children}</li>;
+  return (
+    <li
+      className="whitespace-nowrap px-2 text-sm hover:bg-gray-300"
+      onClick={handleClick}
+    >
+      {children}
+    </li>
+  );
 }
 
 ToggleMenus.Toggle = Toggle;
 ToggleMenus.List = List;
-ToggleMenus.Button = Button;
+ToggleMenus.ListItem = ListItem;
 export default ToggleMenus;

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Modal from "react-modal";
-import Button from "./Button";
 import { IconContext } from "react-icons";
 import { FaTimes } from "react-icons/fa";
 
@@ -20,7 +19,8 @@ const customStyles = {
 function ModalUI({ btnName, children }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  function openModal() {
+  function openModal(e) {
+    e.stopPropagation();
     setModalIsOpen(true);
   }
 
@@ -28,8 +28,9 @@ function ModalUI({ btnName, children }) {
     setModalIsOpen(false);
   }
   return (
-    <div>
-      <Button btnName={btnName} onClick={openModal} type="red" size="small" />
+    <>
+      <p onClick={openModal}> {btnName}</p>
+
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -51,7 +52,7 @@ function ModalUI({ btnName, children }) {
         </div>
         {children}
       </Modal>
-    </div>
+    </>
   );
 }
 
