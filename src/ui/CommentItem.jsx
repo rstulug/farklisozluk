@@ -149,7 +149,7 @@ function CommentItem({ comment, likeStatus, disabled = false }) {
                   {user && comment.User.id === user.id && (
                     <ToggleMenus.ListItem>
                       <ModalUI btnName="yorumu sil">
-                        <ConfirmDelete id={comment?.id} />
+                        <ConfirmDelete id={comment.id} />
                       </ModalUI>
                     </ToggleMenus.ListItem>
                   )}

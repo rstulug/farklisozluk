@@ -15,7 +15,11 @@ export function useDeleteComment() {
   const { mutate: deleteComment, isLoading: isDeleting } = useMutation({
     mutationFn: deleteCommentApi,
     onSuccess: () => {
-      queryClient.invalidateQueries(["comments", params.postSlug, curPage]);
+      queryClient.invalidateQueries([
+        "comments",
+        params.postSlug || params.usernameSlug,
+        curPage,
+      ]);
       toast.success("Yorum başarıyla silindi");
     },
     onError: (err) =>
