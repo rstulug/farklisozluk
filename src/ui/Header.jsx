@@ -16,7 +16,7 @@ function Header() {
     <div className="mb-2 mt-2 flex items-center justify-between">
       <Link className="flex w-1/6 items-center" to={"/"}>
         <Logo />
-        <h3>Farkli Sozluk</h3>
+        <h3 className="font-semibold text-white">Farkli Sozluk</h3>
       </Link>
 
       <SearchBar />

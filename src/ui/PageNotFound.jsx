@@ -5,7 +5,7 @@ function PageNotFound() {
   const navigate = useNavigate();
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-4 text-xl font-bold">
-      <h1>Page is not found. Please try again later</h1>
+      <h1>Böyle bir şey bulamadık. İstersen geri dön</h1>
       <Button
         type="alternative"
         size="regular"

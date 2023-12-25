@@ -14,7 +14,7 @@ function Button({ btnName, type, onClick, disabled, size, to }) {
       "text-gray-900 bg-white border border-gray-300  hover:bg-gray-100  rounded-lg  dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600  mx-2 my-2 ",
 
     green:
-      " text-white bg-green-700 hover:bg-green-800   rounded-lg  dark:bg-green-600 dark:hover:bg-green-700 mx-2 my-2 ",
+      " text-white bg-green-700 hover:bg-green-500   rounded-lg  dark:bg-green-400 dark:hover:bg-green-500 mx-2 my-2 ",
 
     red: " text-white bg-red-700 hover:bg-red-800   rounded-lg  dark:bg-red-600 dark:hover:bg-red-700  mx-2 my-2 ",
   };

@@ -21,6 +21,11 @@ function Pagination({ count }) {
     setSearchParams(searchParams);
   }
 
+  function handleChange(e) {
+    searchParams.set("page", e.target.value);
+    setSearchParams(searchParams);
+  }
+
   return (
     <div className="flex flex-row items-center justify-between font-semibold">
       {curPage > 1 && (
@@ -33,7 +38,15 @@ function Pagination({ count }) {
           {curPage - 1}
         </button>
       )}
-      <div className="mx-5">{curPage}</div>
+      <div className="mx-4">
+        <select value={curPage} onChange={handleChange}>
+          {Array.from({ length: lastPage }, (v, i) => i + 1).map((page) => (
+            <option value={page} key={page}>
+              {page}
+            </option>
+          ))}
+        </select>
+      </div>
       {curPage < lastPage && (
         <button
           className="flex flex-row items-center"
