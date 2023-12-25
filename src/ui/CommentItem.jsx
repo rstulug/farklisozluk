@@ -8,7 +8,7 @@ import { IconContext } from "react-icons/lib";
 import { useDeleteCommentInfo } from "../features/comment/useDeleteCommentInfo";
 import { useInsertCommentInfo } from "../features/comment/useInsertCommentInfo";
 import { useUser } from "../features/authentication/useUser";
-import { MAX_COMMENT_WORD } from "../utils/constants";
+import { DEFAULT_AVATAR, MAX_COMMENT_WORD } from "../utils/constants";
 import { ModalUIProvider } from "./Modal";
 import ConfirmDelete from "./ConfirmDelete";
 import ToggleMenus from "./ToggleMenus";
@@ -185,7 +185,13 @@ function CommentItem({ comment, likeStatus, disabled = false }) {
                     {format(parseISO(comment.created_at), "dd-MM-yyyy HH:mm")}
                   </p>
                 </div>
-                <div>image</div>
+                <div className="h-10 w-10 rounded-full">
+                  <img
+                    className="h-full w-full rounded-full"
+                    src={comment?.User?.avatar_path || DEFAULT_AVATAR}
+                    alt="user profile picture"
+                  />
+                </div>
               </div>
             </Link>
           </div>

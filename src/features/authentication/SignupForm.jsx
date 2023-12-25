@@ -3,6 +3,7 @@ import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import { useSignup } from "./useSignup";
+import { v4 as uuidv4 } from "uuid";
 
 import { slugify } from "../../utils/helpers";
 
@@ -11,10 +12,35 @@ function SignupForm() {
   const { errors } = formState;
   const { signUp, status } = useSignup();
 
-  function onSubmit({ email, password, username, name, surname, gender }) {
+  function onSubmit({
+    email,
+    password,
+    username,
+    name,
+    surname,
+    gender,
+    avatar,
+  }) {
     const usernameSlug = slugify(username);
+    const imageName = username + "/" + uuidv4();
+    const imageFile = avatar[0];
 
-    signUp({ username, email, password, name, surname, gender, usernameSlug });
+    const avatar_path =
+      "https://gucrwoegryslkclkyefh.supabase.co/storage/v1/object/public/avatars/" +
+      imageName;
+
+    signUp({
+      username,
+      email,
+      password,
+      name,
+      surname,
+      gender,
+      usernameSlug,
+      avatar_path,
+      imageName,
+      imageFile,
+    });
   }
 
   return (
@@ -105,10 +131,16 @@ function SignupForm() {
       </FormRow>
       <FormRow label="Cinsiyet" error={errors?.gender?.message}>
         <select {...register("gender")} className="h-8 rounded-lg pl-2 text-xl">
+          <option value="other" selected>
+            ---
+          </option>
           <option value="female">Kadın</option>
           <option value="male">Erkek</option>
           <option value="other">Belirtmek istemiyorum</option>
         </select>
+      </FormRow>
+      <FormRow label="Profil Fotoğrafı" error={errors?.avatar?.message}>
+        <input type="file" id="avatar" {...register("avatar")} />
       </FormRow>
 
       <div className="flex flex-row justify-between">

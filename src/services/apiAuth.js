@@ -7,7 +7,10 @@ export async function Signup({
   name,
   surname,
   usernameSlug,
+  avatar_path,
   gender,
+  imageName,
+  imageFile,
 }) {
   const { data: newUser, error1 } = await supabase.auth.signUp({
     email,
@@ -27,13 +30,30 @@ export async function Signup({
   const { error2 } = await supabase
     .from("UserMeta")
     .insert([
-      { id: newUser.user.id, username, usernameSlug, name, surname, gender },
+      {
+        id: newUser.user.id,
+        username,
+        usernameSlug,
+        name,
+        surname,
+        gender,
+        avatar_path,
+      },
     ])
     .select();
 
   if (error2)
     throw new Error(
       `The new user could not be created. The reason is ${error2.message}`,
+    );
+
+  const { error: avatarError } = await supabase.storage
+    .from("avatars")
+    .upload(imageName, imageFile);
+
+  if (avatarError)
+    throw new Error(
+      `Profil fotoğrafı yüklenirken bir hata oluştu. Muhtemel neden: ${avatarError.message} `,
     );
 
   return newUser;

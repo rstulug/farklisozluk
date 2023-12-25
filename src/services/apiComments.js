@@ -7,9 +7,12 @@ export async function getPostComments({ postSlug, curPage }) {
   const to = from + COMMENT_PER_PAGE - 1;
   const { data, count, error } = await supabase
     .from("Comment")
-    .select("*,User(id, username, usernameSlug),Post!inner(id, titleSlug)", {
-      count: "exact",
-    })
+    .select(
+      "*,User(id, username, usernameSlug,avatar_path),Post!inner(id, titleSlug)",
+      {
+        count: "exact",
+      },
+    )
     .eq("Post.titleSlug", postSlug)
     .order("created_at")
     .range(from, to);
@@ -26,7 +29,7 @@ export async function getUserComments({ usernameSlug, curPage }) {
   const { data, count, error } = await supabase
     .from("Comment")
     .select(
-      "*,Post(id, title, titleSlug), User!inner(id,username, usernameSlug)",
+      "*,Post(id, title, titleSlug), User!inner(id,username, usernameSlug,avatar_path)",
       { count: "exact" },
     )
     .eq("User.usernameSlug", usernameSlug)
