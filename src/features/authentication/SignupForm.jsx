@@ -131,7 +131,7 @@ function SignupForm() {
       </FormRow>
       <FormRow label="Cinsiyet" error={errors?.gender?.message}>
         <select {...register("gender")} className="h-8 rounded-lg pl-2 text-xl">
-          <option value="other" selected>
+          <option disabled selected value>
             ---
           </option>
           <option value="female">Kadın</option>
