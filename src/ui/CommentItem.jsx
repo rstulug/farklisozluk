@@ -174,13 +174,11 @@ function CommentItem({ comment, likeStatus, disabled = false }) {
           <div className="flex justify-end">
             <Link
               to={`/users/${comment.User.usernameSlug}`}
-              className="px-2 py-1 hover:scale-105 hover:rounded-lg hover:bg-gray-200 "
+              className="px-2 py-1 hover:scale-105 hover:rounded-lg  dark:hover:bg-slate-500"
             >
               <div className="flex flex-row gap-3">
                 <div className="flex flex-col justify-center text-center">
-                  <span className="text-green-700">
-                    {comment.User.username}
-                  </span>
+                  <span className="">{comment.User.username}</span>
                   <p className="text-italic text-xs">
                     {format(parseISO(comment.created_at), "dd-MM-yyyy HH:mm")}
                   </p>

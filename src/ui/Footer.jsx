@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <div className="text-md font-semibold">
+    <div className="text-md font-semibold dark:text-slate-700">
       This website is designed by{" "}
       <a
         target="_blank"

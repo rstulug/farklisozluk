@@ -13,10 +13,10 @@ function Header() {
   if (isLoading) return <Spinner />;
 
   return (
-    <div className="mb-2 mt-2 flex items-center justify-between">
+    <div className="mb-2 mt-2 flex flex-col flex-wrap items-center justify-between sm:flex-row">
       <Link className="flex w-1/6 items-center" to={"/"}>
         <Logo />
-        <h3 className="font-semibold text-white">Farkli Sozluk</h3>
+        <h3 className="whitespace-nowrap font-semibold">Farkli Sozluk</h3>
       </Link>
 
       <SearchBar />
@@ -24,7 +24,7 @@ function Header() {
         <div className="font-xl flex w-2/6 flex-row items-center justify-center gap-2">
           <Link
             to={`/users/${user.user_metadata.usernameSlug}`}
-            className="font-italic text-md  hover:font-semibold"
+            className="font-italic text-md   hover:scale-105 hover:font-bold"
           >
             {user?.user_metadata?.username}
           </Link>

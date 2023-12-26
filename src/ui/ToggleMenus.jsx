@@ -46,7 +46,7 @@ function List({ children, id }) {
 
   return createPortal(
     <ul
-      className="absolute bottom-[30px] right-[0]  flex  flex-col justify-center gap-1 rounded-md bg-stone-300 px-2 py-2"
+      className="absolute bottom-[30px] right-[0]  flex   flex-col justify-center gap-1 rounded-md px-2 py-2 dark:bg-slate-500"
       ref={ref}
     >
       {children}
@@ -64,7 +64,7 @@ function ListItem({ children, onClick }) {
 
   return (
     <li
-      className="whitespace-nowrap px-2 text-sm hover:bg-gray-300"
+      className="whitespace-nowrap px-2 text-sm dark:hover:scale-105 dark:hover:font-bold"
       onClick={handleClick}
     >
       {children}

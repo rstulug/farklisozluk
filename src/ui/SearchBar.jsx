@@ -9,7 +9,7 @@ function SearchBar() {
   }
 
   return (
-    <div className="flex  w-2/5 flex-row items-center">
+    <div className="flex  w-80  flex-row items-center sm:w-2/5">
       <input
         type="search"
         className=" h-10 w-full rounded-md border-2 border-black outline-none placeholder:pl-3 "

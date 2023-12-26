@@ -107,7 +107,9 @@ export async function deleteCommentInfo(id) {
 export async function getHighestLikedComment() {
   const { data, error } = await supabase
     .from("Comment")
-    .select("*,Post(id, title, titleSlug), User(username, usernameSlug)")
+    .select(
+      "*,Post(id, title, titleSlug), User(username, usernameSlug, avatar_path)",
+    )
     .order("numLike", { ascending: false })
     .limit(1)
     .single();
@@ -123,7 +125,9 @@ export async function getHighestLikedComment() {
 export async function getLowestLikedComment() {
   const { data, error } = await supabase
     .from("Comment")
-    .select("*,Post(id, title, titleSlug), User(username, usernameSlug)")
+    .select(
+      "*,Post(id, title, titleSlug), User(username, usernameSlug, avatar_path)",
+    )
     .order("numUnlike", { ascending: false })
     .limit(1)
     .single();
@@ -139,7 +143,9 @@ export async function getLowestLikedComment() {
 export async function getHighestLikedCommentLastDay() {
   const { data, error } = await supabase
     .from("Comment")
-    .select("*,Post(id, title, titleSlug), User(username, usernameSlug)")
+    .select(
+      "*,Post(id, title, titleSlug), User(username, usernameSlug, avatar_path)",
+    )
     .gte("created_at", getTwoDaysBefore({ end: true }))
     .lte("created_at", getYesterday({ end: true }))
     .order("numLike", { ascending: false })
@@ -159,7 +165,9 @@ export async function getHighestLikedCommentLastDay() {
 export async function getLowestLikedCommentLastDay() {
   const { data, error } = await supabase
     .from("Comment")
-    .select("*,Post(id, title, titleSlug), User(username, usernameSlug)")
+    .select(
+      "*,Post(id, title, titleSlug), User(username, usernameSlug, avatar_path)",
+    )
     .gte("created_at", getTwoDaysBefore({ end: true }))
     .lte("created_at", getYesterday({ end: true }))
     .order("numUnlike", { ascending: false })

@@ -6,8 +6,8 @@ function SidebarItem({ post }) {
       to={`/posts/${post.titleSlug}`}
       className={({ isActive }) =>
         isActive
-          ? "ml-2 mr-2  items-center rounded-xl bg-blue-200 px-2 py-1"
-          : "ml-2  items-center hover:mr-2 hover:rounded-lg hover:bg-gray-200 hover:px-2 hover:py-1"
+          ? "ml-2 mr-2  items-center rounded-xl px-2 py-1 dark:bg-slate-500"
+          : "ml-2  items-center hover:mr-2 hover:rounded-lg hover:px-2 hover:py-1 dark:hover:bg-slate-500"
       }
     >
       {post.title}

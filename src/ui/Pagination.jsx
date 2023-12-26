@@ -38,8 +38,12 @@ function Pagination({ count }) {
           {curPage - 1}
         </button>
       )}
-      <div className="mx-4">
-        <select value={curPage} onChange={handleChange}>
+      <div className="mx-4 ">
+        <select
+          value={curPage}
+          onChange={handleChange}
+          className="rounded-md dark:bg-[#2b2b31c7]"
+        >
           {Array.from({ length: lastPage }, (v, i) => i + 1).map((page) => (
             <option value={page} key={page}>
               {page}
