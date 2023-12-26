@@ -7,8 +7,8 @@ function ConfirmDelete({ id }) {
   const { closeModal } = useModal();
   return (
     <div className="flex  w-full items-center justify-center backdrop-blur-xl">
-      <div className="m-auto flex  w-3/6 flex-col justify-center bg-white  dark:bg-slate-500">
-        <div className="mx-2 my-3 items-center text-center text-xl font-bold dark:text-gray-200">
+      <div className="m-auto flex  w-3/6 flex-col justify-center bg-white  dark:bg-inherit">
+        <div className="mx-2 my-3 items-center text-center text-xl font-bold dark:text-gray-100">
           Gerçekten bu yorumu silmek istiyor musun ? Bu işlem geri alınamaz.
         </div>
         <div className="flex justify-center">

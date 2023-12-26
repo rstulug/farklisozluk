@@ -21,7 +21,7 @@ function Header() {
 
       <SearchBar />
       {user?.user_metadata?.username && !isLoading ? (
-        <div className="font-xl flex w-2/6 flex-row items-center justify-center gap-2">
+        <div className="font-xl flex w-2/6 flex-row items-center justify-center gap-1">
           <Link
             to={`/users/${user.user_metadata.usernameSlug}`}
             className="font-italic text-md   hover:scale-105 hover:font-bold"
