@@ -130,8 +130,12 @@ function SignupForm() {
         />
       </FormRow>
       <FormRow label="Cinsiyet" error={errors?.gender?.message}>
-        <select {...register("gender")} className="h-8 rounded-lg pl-2 text-xl">
-          <option disabled selected value>
+        <select
+          defaultValue="other"
+          {...register("gender")}
+          className="h-8 rounded-lg pl-2 text-xl"
+        >
+          <option disabled value="other">
             ---
           </option>
           <option value="female">Kadın</option>

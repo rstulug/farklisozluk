@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar";
 import { useUser } from "../features/authentication/useUser";
 import { useLogout } from "../features/authentication/useLogout";
 import Spinner from "../ui/Spinner";
+import DarkMode from "./DarkMode";
 
 function Header() {
   const { logout, status } = useLogout();
@@ -14,10 +15,17 @@ function Header() {
 
   return (
     <div className="mb-2 mt-2 flex flex-col flex-wrap items-center justify-between sm:flex-row">
-      <Link className="flex w-1/6 items-center" to={"/"}>
-        <Logo />
-        <h3 className="whitespace-nowrap font-semibold">Farkli Sozluk</h3>
-      </Link>
+      <div className="flex flex-row items-center gap-1">
+        <div>
+          <Link className="flex w-1/6 items-center" to={"/"}>
+            <Logo />
+            <h3 className="whitespace-nowrap font-semibold">Farkli Sozluk</h3>
+          </Link>
+        </div>
+        <div>
+          <DarkMode />
+        </div>
+      </div>
 
       <SearchBar />
       {user?.user_metadata?.username && !isLoading ? (
@@ -29,7 +37,7 @@ function Header() {
             {user?.user_metadata?.username}
           </Link>
           <Button
-            btnName="Yeni Post oluştur"
+            btnName="Yeni Başlık"
             type="green"
             size="small"
             to={"/new-post/"}

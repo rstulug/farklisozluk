@@ -42,7 +42,7 @@ function Pagination({ count }) {
         <select
           value={curPage}
           onChange={handleChange}
-          className="rounded-md dark:bg-[#2b2b31c7]"
+          className="rounded-md bg-green-200 dark:bg-[#2b2b31c7]"
         >
           {Array.from({ length: lastPage }, (v, i) => i + 1).map((page) => (
             <option value={page} key={page}>

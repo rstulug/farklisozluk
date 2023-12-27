@@ -24,7 +24,7 @@ function AppLayout() {
             Reklamlar burada yer alacak
           </div>
         </div>
-        <div className="fixed bottom-0 left-0 flex h-10 w-full items-center justify-center border-t-2 border-gray-500 bg-stone-200">
+        <div className="fixed bottom-0 left-0 flex h-10 w-full items-center justify-center border-t-2 border-gray-500 bg-stone-200 dark:bg-stone-500">
           <Footer />
         </div>
       </div>
