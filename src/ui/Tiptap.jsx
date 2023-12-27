@@ -102,17 +102,24 @@ const MenuBar = ({ editor }) => {
 
 //export default MenuBar;
 
-export const Tiptap = ({ onChange, error, formState, reset, content = "" }) => {
+export const Tiptap = ({
+  onChange,
+  error,
+  formState,
+  reset,
+  comment = null,
+}) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
       Underline,
       Link.configure({
         openOnClick: false,
-        HTMLAttributes: { class: "text-blue-500 underline dark:bg-slate-500" },
+        HTMLAttributes: {
+          class: "text-blue-500 underline dark:bg-slate-500",
+        },
       }),
     ],
-    content: content,
 
     editorProps: {
       attributes: {
@@ -129,8 +136,17 @@ export const Tiptap = ({ onChange, error, formState, reset, content = "" }) => {
 
   useEffect(
     function () {
-      editor?.commands?.clearContent();
-      reset();
+      editor?.commands.insertContent(comment);
+    },
+    [comment, editor],
+  );
+
+  useEffect(
+    function () {
+      if (formState.isSubmitSuccessful) {
+        editor?.commands.clearContent();
+        reset();
+      }
     },
     [formState.isSubmitSuccessful, editor, reset],
   );

@@ -27,7 +27,7 @@ function UpdateComment({ id, comment }) {
             error={fieldState?.error}
             formState={formState}
             reset={reset}
-            content={comment}
+            comment={comment}
           />
         )}
         control={control}

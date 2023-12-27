@@ -8,7 +8,7 @@ function AppLayout() {
   const outlet = useOutlet();
 
   return (
-    <div className=" relative m-0 min-h-screen bg-[#b1c9cabe] font-[Consolas] dark:bg-[#2b2b31c7] dark:text-slate-300">
+    <div className=" relative m-0 min-h-screen bg-[#b1c9cabe] font-[monospace] dark:bg-[#2b2b31c7] dark:text-slate-300">
       <div className=" mx-auto flex  w-full flex-col md:max-w-7xl">
         <div className=" left-0 top-0  mb-0 h-auto  w-full border-b-2  border-b-gray-500 pb-2 ">
           <Header />

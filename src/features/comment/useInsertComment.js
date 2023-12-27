@@ -1,24 +1,23 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { insertComment as insertCommentApi } from "../../services/apiComments";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useComments } from "./useComments";
+import { COMMENT_PER_PAGE } from "../../utils/constants";
 
 export function useInsertComment() {
   const queryClient = useQueryClient();
   const params = useParams();
-  const [searchParams] = useSearchParams();
+  const { count } = useComments();
+  const navigate = useNavigate();
 
-  //Pagination
-  const curPage = !searchParams.get("page")
-    ? 1
-    : Number(searchParams.get("page"));
+  const lastPage = Math.ceil((count + 1) / COMMENT_PER_PAGE);
 
   const { mutate: insertComment, status } = useMutation({
     mutationFn: insertCommentApi,
-    onSuccess: queryClient.invalidateQueries([
-      "comments",
-      params.postSlug,
-      curPage,
-    ]),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["comments", params.postSlug, lastPage]);
+      navigate(`/posts/${params.postSlug}?page=${lastPage}`);
+    },
   });
   return { insertComment, status };
 }
