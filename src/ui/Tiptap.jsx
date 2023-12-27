@@ -136,7 +136,7 @@ export const Tiptap = ({
 
   useEffect(
     function () {
-      editor?.commands.insertContent(comment);
+      if (comment) editor?.commands.insertContent(comment);
     },
     [comment, editor],
   );
