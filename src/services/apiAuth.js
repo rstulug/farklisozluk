@@ -109,3 +109,32 @@ export async function getUserData(slug) {
 
   return data;
 }
+
+export async function updateUserPassword({ email, password }) {
+  const { data, error } = await supabase.auth.updateUser({
+    email,
+    password,
+  });
+
+  if (error)
+    throw new Error(
+      `Şifre güncelleme işlemi başarısız. Muhtemel neden: ${error.message}`,
+    );
+
+  return data;
+}
+
+export async function updateUserInfo({ userId, obj }) {
+  const { data, error } = await supabase
+    .from("UserMeta")
+    .update(obj)
+    .eq("id", userId)
+    .select();
+
+  if (error)
+    throw new Error(
+      `Kullanıcı bilgileri güncelleme işlemi başarısız oldu. Muhtemel neden: ${error.message}`,
+    );
+
+  return data;
+}

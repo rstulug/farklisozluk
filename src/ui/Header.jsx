@@ -6,6 +6,8 @@ import { useUser } from "../features/authentication/useUser";
 import { useLogout } from "../features/authentication/useLogout";
 import Spinner from "../ui/Spinner";
 import DarkMode from "./DarkMode";
+import { FaCog } from "react-icons/fa";
+import { IconContext } from "react-icons";
 
 function Header() {
   const { logout, status } = useLogout();
@@ -49,6 +51,16 @@ function Header() {
             onClick={logout}
             disabled={status.pending}
           />
+          {user && (
+            <Link
+              to={`/account/${user.user_metadata.usernameSlug}`}
+              title="Ayarlara Git"
+            >
+              <IconContext.Provider value={{ size: "1.5rem" }}>
+                <FaCog />
+              </IconContext.Provider>
+            </Link>
+          )}
         </div>
       ) : (
         <div>

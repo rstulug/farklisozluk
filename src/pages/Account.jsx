@@ -1,8 +1,11 @@
+import UserSettings from "../features/account/UserSettings";
+import ProtectedRoute from "../ui/ProtectedRoute";
+
 function Account() {
   return (
-    <div>
-      kullanıcıya ait bilgiler düzenleme ve şifre değişikliğide burada olacak
-    </div>
+    <ProtectedRoute>
+      <UserSettings />;
+    </ProtectedRoute>
   );
 }
 
