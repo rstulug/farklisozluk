@@ -136,19 +136,14 @@ export const Tiptap = ({
 
   useEffect(
     function () {
-      if (comment) editor?.commands.insertContent(comment);
-    },
-    [comment, editor],
-  );
-
-  useEffect(
-    function () {
       if (formState.isSubmitSuccessful) {
         editor?.commands.clearContent();
         reset();
+      } else if (comment) {
+        editor?.commands.insertContent(comment);
       }
     },
-    [formState.isSubmitSuccessful, editor, reset],
+    [formState.isSubmitSuccessful, editor, reset, comment],
   );
 
   return (
