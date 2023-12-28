@@ -4,7 +4,7 @@ import ProtectedRoute from "../ui/ProtectedRoute";
 function Account() {
   return (
     <ProtectedRoute>
-      <UserSettings />;
+      <UserSettings />
     </ProtectedRoute>
   );
 }

@@ -25,11 +25,8 @@ function UserSettings() {
   const { errorsInfo, isSubmitSuccessful: isSubmitSuccessfulInfo } =
     formStateInfo;
 
-  const {
-    register: registerAvatar,
-    handleSubmit: handleSubmitAvatar,
-    formState: formStateAvatar,
-  } = useForm();
+  const { register: registerAvatar, handleSubmit: handleSubmitAvatar } =
+    useForm();
 
   const { updateUserPassword, status } = useUpdatePassword();
   const { updateUserInfo, status: statusInfo } = useUpdateUserInfo();
@@ -91,7 +88,12 @@ function UserSettings() {
       if (isSubmitSuccessful) {
         reset();
       } else if (isSubmitSuccessfulInfo) {
-        resetInfo({ gender: getValuesInfo("gender") });
+        resetInfo({
+          gender: getValuesInfo("gender"),
+          name: "",
+          surname: "",
+          about: "",
+        });
       }
     },
     [
@@ -104,122 +106,125 @@ function UserSettings() {
   );
 
   return (
-    <div>
+    <>
       <div>
-        <h2 className="text-xl">Kullanıcı bilgilerini güncelle</h2>
-        <Form onSubmit={handleSubmitInfo(onUpdateUserInfo)}>
-          <FormRow label="İsim" error={errorsInfo?.name?.message}>
-            <input
-              className="h-8 rounded-lg pl-2 text-xl"
-              type="text"
-              id="name"
-              placeholder={userMeta.name}
-              disabled={statusInfo.pending}
-              {...registerInfo("name")}
+        <div>
+          <h2 className="text-xl">Kullanıcı bilgilerini güncelle</h2>
+          <Form onSubmit={handleSubmitInfo(onUpdateUserInfo)}>
+            <FormRow label="İsim" error={errorsInfo?.name?.message}>
+              <input
+                className="h-8 rounded-lg pl-2 text-xl"
+                type="text"
+                id="name"
+                placeholder={userMeta.name}
+                disabled={statusInfo.pending}
+                {...registerInfo("name")}
+              />
+            </FormRow>
+            <FormRow label="Soyisim" error={errorsInfo?.surname?.message}>
+              <input
+                className="h-8 rounded-lg pl-2 text-xl"
+                type="text"
+                id="surname"
+                placeholder={userMeta.surname}
+                disabled={statusInfo.pending}
+                {...registerInfo("surname")}
+              />
+            </FormRow>
+            <FormRow label="Cinsiyet" error={errorsInfo?.gender?.message}>
+              <select
+                defaultValue={userMeta.gender}
+                {...registerInfo("gender")}
+                className="h-8 rounded-lg pl-2 text-xl"
+              >
+                <option value="female">Kadın</option>
+                <option value="male">Erkek</option>
+                <option value="other">Belirtmek istemiyorum</option>
+              </select>
+            </FormRow>
+            <FormRow label="Hakkında" error={errorsInfo?.about?.message}>
+              <textarea
+                className="rounded-lg text-lg"
+                cols="25"
+                rows="10"
+                id="about"
+                placeholder={userMeta.about}
+                disabled={statusInfo.pending}
+                {...registerInfo("about", {
+                  maxLength: {
+                    value: 500,
+                    message: "Hakkında kısmı 500 kelimeden fazla olamaz",
+                  },
+                })}
+              />
+            </FormRow>
+            <Button
+              btnName="Bilgileri Güncelle"
+              type="primary"
+              size="regular"
+              disabled={status.pending}
             />
-          </FormRow>
-          <FormRow label="Soyisim" error={errorsInfo?.surname?.message}>
-            <input
-              className="h-8 rounded-lg pl-2 text-xl"
-              type="text"
-              id="surname"
-              placeholder={userMeta.surname}
-              disabled={statusInfo.pending}
-              {...registerInfo("surname")}
+          </Form>
+        </div>
+        <div>
+          <h2 className="text-xl">Profil fotoğrafını değiştir</h2>
+          <Form onSubmit={handleSubmitAvatar(onUpdateAvatar)}>
+            <FormRow label="Profil Fotoğrafı" error={errors?.avatar?.message}>
+              <input type="file" id="avatar" {...registerAvatar("avatar")} />
+            </FormRow>
+            <Button
+              btnName="Değiştir"
+              type="primary"
+              size="regular"
+              disabled={statusUploadAvatar.pending}
             />
-          </FormRow>
-          <FormRow label="Cinsiyet" error={errorsInfo?.gender?.message}>
-            <select
-              defaultValue={userMeta.gender}
-              {...registerInfo("gender")}
-              className="h-8 rounded-lg pl-2 text-xl"
+          </Form>
+        </div>
+        <div>
+          <h2 className="text-xl">Şifreyi değiştir</h2>
+          <Form onSubmit={handleSubmit(onUpdatePassword)}>
+            <FormRow label="Yeni Şifre" error={errors?.password?.message}>
+              <input
+                className="h-8 rounded-lg pl-2 text-xl"
+                type="password"
+                id="password"
+                disabled={status.pending}
+                {...register("password", {
+                  required: "Bu alan zorunludur",
+                  minLength: {
+                    value: 8,
+                    message:
+                      "Şifre 8 ve ya daha fazla karaktere sahip olmalıdır",
+                  },
+                })}
+              />
+            </FormRow>
+            <FormRow
+              label="Şifre Tekrarı"
+              error={errors?.passwordConfirm?.message}
             >
-              <option value="female">Kadın</option>
-              <option value="male">Erkek</option>
-              <option value="other">Belirtmek istemiyorum</option>
-            </select>
-          </FormRow>
-          <FormRow label="Hakkında" error={errorsInfo?.about?.message}>
-            <textarea
-              className="rounded-lg text-lg"
-              cols="25"
-              rows="10"
-              id="about"
-              placeholder={userMeta.about}
-              disabled={statusInfo.pending}
-              {...registerInfo("about", {
-                maxLength: {
-                  value: 500,
-                  message: "Hakkında kısmı 500 kelimeden fazla olamaz",
-                },
-              })}
-            />
-          </FormRow>
-          <Button
-            btnName="Bilgileri Güncelle"
-            type="primary"
-            size="regular"
-            disabled={status.pending}
-          />
-        </Form>
-      </div>
-      <div>
-        <h2 className="text-xl">Profil fotoğrafını değiştir</h2>
-        <Form onSubmit={handleSubmitAvatar(onUpdateAvatar)}>
-          <FormRow label="Profil Fotoğrafı" error={errors?.avatar?.message}>
-            <input type="file" id="avatar" {...registerAvatar("avatar")} />
-          </FormRow>
-          <Button
-            btnName="Değiştir"
-            type="primary"
-            size="regular"
-            disabled={statusUploadAvatar.pending}
-          />
-        </Form>
-      </div>
-      <div>
-        <h2 className="text-xl">Şifreyi değiştir</h2>
-        <Form onSubmit={handleSubmit(onUpdatePassword)}>
-          <FormRow label="Yeni Şifre" error={errors?.password?.message}>
-            <input
-              className="h-8 rounded-lg pl-2 text-xl"
-              type="password"
-              id="password"
+              <input
+                className="h-8 rounded-lg pl-2 text-xl"
+                type="password"
+                id="passwordConfirm"
+                disabled={status.pending}
+                {...register("passwordConfirm", {
+                  required: "Bu alan zorunludur",
+                  validate: (value) =>
+                    value === getValues().password || "Şifreler uyuşmuyor",
+                })}
+              />
+            </FormRow>
+            <Button
+              btnName="Şifreyi Güncelle"
+              type="primary"
+              size="regular"
               disabled={status.pending}
-              {...register("password", {
-                required: "Bu alan zorunludur",
-                minLength: {
-                  value: 8,
-                  message: "Şifre 8 ve ya daha fazla karaktere sahip olmalıdır",
-                },
-              })}
             />
-          </FormRow>
-          <FormRow
-            label="Şifre Tekrarı"
-            error={errors?.passwordConfirm?.message}
-          >
-            <input
-              className="h-8 rounded-lg pl-2 text-xl"
-              type="password"
-              id="passwordConfirm"
-              disabled={status.pending}
-              {...register("passwordConfirm", {
-                required: "Bu alan zorunludur",
-                validate: (value) =>
-                  value === getValues().password || "Şifreler uyuşmuyor",
-              })}
-            />
-          </FormRow>
-          <Button
-            btnName="Şifreyi Güncelle"
-            type="primary"
-            size="regular"
-            disabled={status.pending}
-          />
-        </Form>
+          </Form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
