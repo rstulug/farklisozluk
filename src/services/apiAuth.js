@@ -138,3 +138,36 @@ export async function updateUserInfo({ userId, obj }) {
 
   return data;
 }
+
+export async function uploadAvatar({
+  imageName,
+  imageFile,
+  avatar_path,
+  userId,
+  oldImageName,
+}) {
+  const { data, error } = await supabase.storage
+    .from("avatars")
+    .upload(imageName, imageFile);
+
+  if (error)
+    throw new Error(`Profil fotoğrafı yüklenemedi. Hata:${error.message}`);
+
+  const { error: errorUser } = await supabase
+    .from("UserMeta")
+    .update({ avatar_path: avatar_path })
+    .eq("id", userId);
+
+  if (errorUser) {
+    throw new Error("Yüklenen resim kullanıcıya atanırken bir hata oluştu");
+  }
+  if (oldImageName) {
+    const { error: errorOldImage } = await supabase.storage
+      .from("avatars")
+      .remove([oldImageName]);
+
+    if (errorOldImage)
+      throw new Error("Eski profil fotoğrafı silinirken bir hata oluştu");
+  }
+  return data;
+}

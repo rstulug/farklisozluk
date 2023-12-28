@@ -7,6 +7,8 @@ import Button from "../../ui/Button";
 import { useUpdateUserInfo } from "./useUpdateUserInfo";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { useUploadAvatar } from "./useUploadAvatar";
 
 function UserSettings() {
   const { userMeta, user } = useUser();
@@ -23,12 +25,18 @@ function UserSettings() {
   const { errorsInfo, isSubmitSuccessful: isSubmitSuccessfulInfo } =
     formStateInfo;
 
+  const {
+    register: registerAvatar,
+    handleSubmit: handleSubmitAvatar,
+    formState: formStateAvatar,
+  } = useForm();
+
   const { updateUserPassword, status } = useUpdatePassword();
   const { updateUserInfo, status: statusInfo } = useUpdateUserInfo();
+  const { uploadAvatar, statusUploadAvatar } = useUploadAvatar();
+
   const params = useParams();
   const navigate = useNavigate();
-
-  console.log(userMeta);
 
   useEffect(
     function () {
@@ -51,6 +59,30 @@ function UserSettings() {
         gender: gender || userMeta.gender,
         about: about || userMeta.about,
       },
+    });
+  }
+
+  function onUpdateAvatar({ avatar }) {
+    if (!avatar[0]) return null;
+
+    const imageFile = avatar[0];
+    const imageName = userMeta.usernameSlug + "/" + uuidv4();
+
+    const avatar_path =
+      "https://gucrwoegryslkclkyefh.supabase.co/storage/v1/object/public/avatars/" +
+      imageName;
+    const oldImageName = userMeta.avatar_path
+      ? userMeta.usernameSlug +
+        "/" +
+        userMeta.avatar_path.split(`${userMeta.usernameSlug}/`)[1]
+      : null;
+
+    uploadAvatar({
+      imageName,
+      imageFile,
+      avatar_path,
+      userId: userMeta.id,
+      oldImageName,
     });
   }
 
@@ -128,6 +160,20 @@ function UserSettings() {
             type="primary"
             size="regular"
             disabled={status.pending}
+          />
+        </Form>
+      </div>
+      <div>
+        <h2 className="text-xl">Profil fotoğrafını değiştir</h2>
+        <Form onSubmit={handleSubmitAvatar(onUpdateAvatar)}>
+          <FormRow label="Profil Fotoğrafı" error={errors?.avatar?.message}>
+            <input type="file" id="avatar" {...registerAvatar("avatar")} />
+          </FormRow>
+          <Button
+            btnName="Değiştir"
+            type="primary"
+            size="regular"
+            disabled={statusUploadAvatar.pending}
           />
         </Form>
       </div>

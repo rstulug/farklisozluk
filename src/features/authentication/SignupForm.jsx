@@ -22,7 +22,7 @@ function SignupForm() {
     avatar,
   }) {
     const usernameSlug = slugify(username);
-    const imageName = username + "/" + uuidv4();
+    const imageName = usernameSlug + "/" + uuidv4();
     const imageFile = avatar[0];
 
     const avatar_path =
