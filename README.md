@@ -1,4 +1,4 @@
-This project is under developing phase...
+This is a social website
 
 It is planned to be a social web site in which people can open a post about different topics and share their comments under related post. 
 
