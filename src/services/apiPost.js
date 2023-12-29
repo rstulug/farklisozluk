@@ -42,7 +42,7 @@ export async function insertPost({ User, title, titleSlug, comment }) {
 
   if (error1) throw new Error(error1.message);
 
-  const { data, error: error2 } = await supabase
+  const { error: error2 } = await supabase
     .from("Comment")
     .insert([{ User, Post: newPost.id, comment }])
     .select()
