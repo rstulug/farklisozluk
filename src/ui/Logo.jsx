@@ -1,6 +1,10 @@
 function Logo() {
   return (
-    <img src="/bucket_icon.png" alt="Farkli Sozluk Logo" className="w-8" />
+    <img
+      src="/eye.png"
+      alt="Farkli Sozluk Logo"
+      className="mr-1 h-10 w-20 rounded-full"
+    />
   );
 }
 
