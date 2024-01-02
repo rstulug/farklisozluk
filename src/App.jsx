@@ -11,6 +11,8 @@ import Users from "./pages/Users";
 import Account from "./pages/Account";
 import Signup from "./pages/Signup";
 import { Toaster } from "react-hot-toast";
+import Sidebar from "./ui/Sidebar";
+import Topics from "./pages/Topics";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,6 +28,10 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     errorElement: <PageNotFound />,
     children: [
+      {
+        path: "hot-topics",
+        element: <Topics />,
+      },
       {
         path: "posts/:postSlug",
         element: <Posts />,
