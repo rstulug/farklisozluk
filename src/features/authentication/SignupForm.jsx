@@ -25,9 +25,10 @@ function SignupForm() {
     const imageName = usernameSlug + "/" + uuidv4();
     const imageFile = avatar[0];
 
-    const avatar_path =
-      "https://gucrwoegryslkclkyefh.supabase.co/storage/v1/object/public/avatars/" +
-      imageName;
+    const avatar_path = avatar[0]
+      ? "https://gucrwoegryslkclkyefh.supabase.co/storage/v1/object/public/avatars/" +
+        imageName
+      : "https://gucrwoegryslkclkyefh.supabase.co/storage/v1/object/public/avatars/default_user.jpg";
 
     signUp({
       username,

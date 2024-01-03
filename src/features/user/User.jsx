@@ -2,7 +2,6 @@ import UserComments from "./UserComments";
 import Spinner from "../../ui/Spinner";
 import { useUserData } from "./useUserData";
 import Empty from "../../ui/Empty";
-import { DEFAULT_AVATAR } from "../../utils/constants";
 
 function User() {
   const { userData, isLoading } = useUserData();
@@ -18,7 +17,7 @@ function User() {
         <div className="h-20 w-20 rounded-full border-2 border-black">
           <img
             className="h-full w-full rounded-full"
-            src={userData.avatar_path || DEFAULT_AVATAR}
+            src={userData.avatar_path}
             alt="user profile picture"
           />
         </div>
